@@ -5,14 +5,14 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc5TestBed", "Mvc5TestBed\Mvc5TestBed.csproj", "{4C745FFB-E6B5-4245-B9C4-E0EF59FF6055}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc5TestBed.Tests", "Mvc5TestBed.Tests\Mvc5TestBed.Tests.csproj", "{348AD6EA-B397-45FA-AA50-FF6875A47DE2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc5TestBed.MsTests", "Mvc5TestBed.MsTests\Mvc5TestBed.MsTests.csproj", "{348AD6EA-B397-45FA-AA50-FF6875A47DE2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{6B72D646-E0A9-4623-9ED9-278D14C5025F}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc5TestBed.JavascriptTests", "Mvc5TestBed.JasmineTests\Mvc5TestBed.JasmineTests.csproj", "{5A0237A1-7D27-4AC2-96E5-D1C713D2534E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc5TestBed.JasmineTests", "Mvc5TestBed.JasmineTests\Mvc5TestBed.JasmineTests.csproj", "{5A0237A1-7D27-4AC2-96E5-D1C713D2534E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
