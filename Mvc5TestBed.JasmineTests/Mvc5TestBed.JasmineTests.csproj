@@ -86,6 +86,8 @@
     <Content Include="Content\jasmine\jasmine_favicon.png" />
     <Content Include="Scripts\closures\conceptOfClosure.js" />
     <Content Include="Scripts\closures\conceptOfClosureSpec.js" />
+    <Content Include="Scripts\closures\dangersOfClosures.js" />
+    <Content Include="Scripts\closures\dangersOfClosuresSpec.js" />
     <Content Include="Scripts\closures\modifyingBoundValuesAfterClosureSpec.js" />
     <Content Include="Scripts\closures\modifyingBoundValuesAfterClosure.js" />
     <Content Include="Scripts\closures\warningMakerSpec.js" />

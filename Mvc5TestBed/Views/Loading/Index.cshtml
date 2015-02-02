@@ -1,0 +1,97 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+
+<style>
+    div.infoBox{
+        text-align: center;
+        padding: 200px;
+        border: 1px solid #666;
+        margin-top: 80px;
+    }
+
+    div#initialInfo {
+        display: block;
+    }
+
+    div#spinnerDiv {
+        display: none;
+        background: url(../content/ajax-loader.gif) no-repeat center #fff;
+    }
+
+    div#results {
+        display: none;
+    }
+</style>
+
+@Scripts.Render("~/Scripts/jquery-1.10.2.js")
+
+<div class="row">
+
+    <div id="initialInfo" class="infoBox">
+        <h3>Welcome to the demonstration. Nothing is going on yet.</h3>
+    </div>
+    <div id="spinnerDiv" class="infoBox">
+        <h2>Request submitted, now loading...</h2>
+    </div>
+    <div id="results" class="infoBox">
+    </div>
+
+    @using (Ajax.BeginForm("LoadResult", "Loading",
+        new AjaxOptions { HttpMethod = "Post", OnSuccess = "doneLoading", InsertionMode = InsertionMode.Replace },
+        new { enctype = "multipart/form-data", id = "frmMyForm", onsubmit = "return whenSubmitting();" }))
+    {
+        @*form stuff*@
+    }
+</div>
+
+
+
+<script type="text/javascript">
+    var spinnerVisible = false;
+
+    function showSpinner() {
+        //console.log("showSpinner()")
+        if (!spinnerVisible) {
+            var spinner = $("div#spinnerDiv");
+            $("div#spinnerDiv").fadeIn("fast");
+            $("#initialInfo").hide();
+            $("#completed").hide();
+            spinnerVisible = true;
+        }
+    };
+    function hideSpinner() {
+        //console.log("hideSpinner()")
+        if (spinnerVisible) {
+            var spinner = $("div#spinnerDiv");
+            spinner.stop();
+            spinner.fadeOut("fast");
+            //$("#doneinitialInfo").show();
+            spinnerVisible = false;
+        }
+    };
+    function doneLoading(e) {
+        hideSpinner();
+        //console.log("done loading")
+
+        $("#results").html(e);
+        $("#results").show();
+        
+    }
+
+    function whenSubmitting() {
+        //console.log("submitting")
+        showSpinner();
+    }
+
+
+    $(document).ready(function () {
+        //console.log("ready")
+
+        //initial delay before submitting
+        var timer = setTimeout(function () {
+            $("#frmMyForm").submit();
+        }, 2500);
+    });
+</script>
