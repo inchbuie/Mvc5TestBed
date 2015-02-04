@@ -94,6 +94,8 @@
     <Content Include="Scripts\closures\warningMaker.js" />
     <Content Include="Scripts\functionExpressions\AmusementParkSpec.js" />
     <Content Include="Scripts\functionExpressions\AmusementPark.js" />
+    <Content Include="Scripts\hoisting\hoistingSpec.js" />
+    <Content Include="Scripts\hoisting\hoisting.js" />
     <Content Include="Scripts\jasmine-samples\Player.js" />
     <Content Include="Scripts\jasmine-samples\PlayerSpec.js" />
     <Content Include="Scripts\jasmine-samples\Song.js" />
@@ -102,6 +104,12 @@
     <Content Include="Scripts\jasmine\console.js" />
     <Content Include="Scripts\jasmine\jasmine-html.js" />
     <Content Include="Scripts\jasmine\jasmine.js" />
+    <Content Include="Scripts\objects\enumerationSpec.js" />
+    <Content Include="Scripts\objects\enumeration.js" />
+    <Content Include="Scripts\objects\functionalitySpec.js" />
+    <Content Include="Scripts\objects\functionality.js" />
+    <Content Include="Scripts\objects\creationAndManipulationSpec.js" />
+    <Content Include="Scripts\objects\creationAndManipulation.js" />
   </ItemGroup>
   <ItemGroup />
   <Choose>
