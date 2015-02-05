@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<style>
+    div#img-import-row {
+        margin-top: 20px;
+    }
+
+    img.img-import-icon {
+        width: 100%;
+        border-radius: 6px;
+    }
+
+    .vertical-align {
+        display: flex;
+        -ms-flex-direction: row;
+        flex-direction: row;
+        /*align-items: center;
+        justify-content: center;*/
+    }
+
+    .vertical-align > [class^="col-"],
+    .vertical-align > [class*=" col-"] {
+        display: flex;
+        align-items: center;
+        justify-content: center; /* Optional, to align inner items
+                        horizontally inside the column */
+    }
+
+        /**
+        *  "flex: 1" or "flex-grow: 1" is added to make the inner div
+        *  - Which is also a flex-item - take up all the horizontal space
+        *  available space inside the flex container (.col-* elements)
+        */
+        .vertical-align > [class^="col-"] > div,
+        .vertical-align > [class*=" col-"] > div {
+            /* flex: 1; */
+            flex-grow: 1;
+        }
+</style>
+
+<div class="container">
+    <div id="img-import-row" class="row vertical-align">
+        <div class="col-xs-4 col-md-3">
+            <div>
+                <img src="~/images/greenSquare.png" class="img-import-icon" />
+            </div>
+        </div>
+        <div class="col-xs-4 col-md-3">
+            <div>
+                <img src="~/images/loadingBlue.gif" class="img-responsive" />
+            </div>
+        </div>
+        <div class="col-xs-4 col-md-3">
+            <div>
+                <img src="~/images/blueSquare.png" class="img-import-icon" />
+            </div>
+        </div>
+    </div>
+</div>

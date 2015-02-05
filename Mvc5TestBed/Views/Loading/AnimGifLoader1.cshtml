@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<style>    
+div.img-import-container {
+    margin: 20px;
+    padding: 20px;
+}
+img.img-import-icon {
+    width: 25%;
+    border-radius: 6px;
+}
+img.img-import-arrows {
+    width: 40%;
+    /*float: none !important;
+    display: inline-block !important;*/
+}
+</style>
+
+<div id="spinnerDiv" class="img-import-container">
+    <img src="~/images/greenSquare.png" class="img-import-icon"
+         alt="Green Square&#8482; icon" title="Green Square&#8482;" />
+    <img src="~/images/loadingArrows.gif" class="img-import-arrows"
+         alt="twitter&#8482; icon" title="importing..." />
+    <img src="~/images/blueSquare.png" class="img-import-icon"
+         alt="Blue Square&#8482; icon" title="Blue Square&#8482;" />
+</div>
+<div id="loadingMsg">
+    <h4 class="boldTitle text-center fontBlue" style="padding:10px 0;">
+        Importing your GreenHouse account into BlueDot...
+    </h4>
+</div>
+
+<style>
+    div.infoBox{
+        text-align: center;
+        padding: 200px;
+        border: 1px solid #666;
+        margin-top: 80px;
+    }
+
+    div#initialInfo {
+        display: block;
+    }
+
+    div#spinnerDiv {
+        display: none;
+    }
+
+    div#results {
+        display: none;
+    }
+</style>
+
+@Scripts.Render("~/Scripts/jquery-1.10.2.js")
+
+<script type="text/javascript">
+
+    var spinnerVisible = false;
+    
+    function showSpinner() {
+        if (!spinnerVisible) {
+            var spinner = $("div#spinnerDiv");
+            $("div#spinnerDiv").fadeIn("fast");
+            $("#loadingMsg").show();
+            spinnerVisible = true;
+        }
+    };
+    function hideSpinner() {
+        if (spinnerVisible) {
+            var spinner = $("div#spinnerDiv");
+            spinner.stop();
+            spinner.fadeOut("fast");
+            $("#loadingMsg").hide();
+            spinnerVisible = false;
+        }
+    };
+
+    $(document).ready(function () {
+        showSpinner();
+    });
+
+</script>

@@ -175,10 +175,16 @@
     <Content Include="Content\ajax-loader.gif" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\CssLoadNet.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\blueSquare.png" />
+    <Content Include="images\greenSquare.png" />
+    <Content Include="images\inchbuie_logo_250x75.png" />
+    <Content Include="images\loadingArrows.gif" />
+    <Content Include="images\loadingBlue.gif" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -232,6 +238,9 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Loading\Index.cshtml" />
     <Content Include="Views\Loading\_LoadResult.cshtml" />
+    <Content Include="Views\Loading\CssLoader.cshtml" />
+    <Content Include="Views\Loading\AnimGifLoader1.cshtml" />
+    <Content Include="Views\Loading\AnimGifLoader2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

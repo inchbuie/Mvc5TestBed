@@ -33,5 +33,24 @@ namespace Mvc5TestBed.Controllers
             await Task.Delay(sec*1000); 
             return 0;
         }
+        
+        [HttpGet]
+        public ActionResult CssLoader()
+        {
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult AnimGifLoader1()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult AnimGifLoader2()
+        {
+            return View();
+        }
     }
 }
