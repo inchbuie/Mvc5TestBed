@@ -5,7 +5,7 @@ var myBox1 = {
     length: 10,
     volume: 480,
     material: "cardboard",
-    contents: booksArray
+    contents: booksArray1
 };
 
 function addBook(box, name, writer) {

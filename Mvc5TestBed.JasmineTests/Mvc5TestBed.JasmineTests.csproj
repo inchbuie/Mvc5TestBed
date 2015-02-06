@@ -111,7 +111,9 @@
     <Content Include="Scripts\objects\creationAndManipulationSpec.js" />
     <Content Include="Scripts\objects\creationAndManipulation.js" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Scripts\prototypes\" />
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
