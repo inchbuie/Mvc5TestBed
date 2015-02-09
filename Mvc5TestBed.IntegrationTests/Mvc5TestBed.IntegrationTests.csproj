@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{5A0237A1-7D27-4AC2-96E5-D1C713D2534E}</ProjectGuid>
+    <ProjectGuid>{B7DEE3CC-2979-462A-9B72-FF304EC4F7AF}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Mvc5TestBed.JasmineTests</RootNamespace>
-    <AssemblyName>Mvc5TestBed.JasmineTests</AssemblyName>
+    <RootNamespace>Mvc5TestBed.IntegrationTests</RootNamespace>
+    <AssemblyName>Mvc5TestBed.IntegrationTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -38,6 +38,26 @@
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.core">
+      <HintPath>..\packages\NUnitTestAdapter.1.2\lib\nunit.core.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="nunit.core.interfaces">
+      <HintPath>..\packages\NUnitTestAdapter.1.2\lib\nunit.core.interfaces.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+    </Reference>
+    <Reference Include="nunit.util">
+      <HintPath>..\packages\NUnitTestAdapter.1.2\lib\nunit.util.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="NUnit.VisualStudio.TestAdapter">
+      <HintPath>..\packages\NUnitTestAdapter.1.2\lib\NUnit.VisualStudio.TestAdapter.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -74,46 +94,22 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Controllers\JasmineController.cs" />
+    <Compile Include="HomeControllerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-    <None Include="Views\Jasmine\SpecRunner.cshtml" />
+    <ProjectReference Include="..\Mvc5TestBed.MvcWebApp\Mvc5TestBed.MvcWebApp.csproj">
+      <Project>{4c745ffb-e6b5-4245-b9c4-e0ef59ff6055}</Project>
+      <Name>Mvc5TestBed.MvcWebApp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MvcIntegrationTestFramework\MvcIntegrationTestFramework.csproj">
+      <Project>{2ca1bbc0-788d-49f5-9d6f-c58f2ae312df}</Project>
+      <Name>MvcIntegrationTestFramework</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\jasmine\jasmine.css" />
-    <Content Include="Content\jasmine\jasmine_favicon.png" />
-    <Content Include="Scripts\closures\conceptOfClosure.js" />
-    <Content Include="Scripts\closures\conceptOfClosureSpec.js" />
-    <Content Include="Scripts\closures\dangersOfClosures.js" />
-    <Content Include="Scripts\closures\dangersOfClosuresSpec.js" />
-    <Content Include="Scripts\closures\modifyingBoundValuesAfterClosureSpec.js" />
-    <Content Include="Scripts\closures\modifyingBoundValuesAfterClosure.js" />
-    <Content Include="Scripts\closures\warningMakerSpec.js" />
-    <Content Include="Scripts\closures\warningMaker.js" />
-    <Content Include="Scripts\functionExpressions\AmusementParkSpec.js" />
-    <Content Include="Scripts\functionExpressions\AmusementPark.js" />
-    <Content Include="Scripts\hoisting\hoistingSpec.js" />
-    <Content Include="Scripts\hoisting\hoisting.js" />
-    <Content Include="Scripts\jasmine-samples\Player.js" />
-    <Content Include="Scripts\jasmine-samples\PlayerSpec.js" />
-    <Content Include="Scripts\jasmine-samples\Song.js" />
-    <Content Include="Scripts\jasmine-samples\SpecHelper.js" />
-    <Content Include="Scripts\jasmine\boot.js" />
-    <Content Include="Scripts\jasmine\console.js" />
-    <Content Include="Scripts\jasmine\jasmine-html.js" />
-    <Content Include="Scripts\jasmine\jasmine.js" />
-    <Content Include="Scripts\objects\enumerationSpec.js" />
-    <Content Include="Scripts\objects\enumeration.js" />
-    <Content Include="Scripts\objects\functionalitySpec.js" />
-    <Content Include="Scripts\objects\functionality.js" />
-    <Content Include="Scripts\objects\creationAndManipulationSpec.js" />
-    <Content Include="Scripts\objects\creationAndManipulation.js" />
-    <Content Include="Scripts\prototypes\prototypesSpec.js" />
-    <Content Include="Scripts\prototypes\prototypes.js" />
+    <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
