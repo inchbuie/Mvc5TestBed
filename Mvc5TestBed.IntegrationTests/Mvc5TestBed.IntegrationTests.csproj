@@ -98,9 +98,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Mvc5TestBed.MvcWebApp\Mvc5TestBed.MvcWebApp.csproj">
+    <ProjectReference Include="..\Mvc5TestBed.MyMvcWebApp\Mvc5TestBed.MyMvcWebApp.csproj">
       <Project>{4c745ffb-e6b5-4245-b9c4-e0ef59ff6055}</Project>
-      <Name>Mvc5TestBed.MvcWebApp</Name>
+      <Name>Mvc5TestBed.MyMvcWebApp</Name>
     </ProjectReference>
     <ProjectReference Include="..\MvcIntegrationTestFramework\MvcIntegrationTestFramework.csproj">
       <Project>{2ca1bbc0-788d-49f5-9d6f-c58f2ae312df}</Project>

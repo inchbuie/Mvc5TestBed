@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Specify Your Name";
+}
+
+<h2>SetName</h2>
+@using (Html.BeginForm())
+{
+    <p>
+        What is your name? @Html.TextBox("name")
+        <button type="submit">Set Name</button>
+    </p>
+}
+

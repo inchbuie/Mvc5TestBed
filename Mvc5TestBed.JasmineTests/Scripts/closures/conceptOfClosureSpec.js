@@ -1,7 +1,7 @@
 ﻿/// <reference path="../jasmine/jasmine.js" />
 /// <reference path="conceptOfClosure.js" />
 
-describe("conceptOfClosure", function () {
+describe("closures1", function () {
     describe("testClosure1", function () {
         it("should return value from internal variable", function () {
             var expected = 4;

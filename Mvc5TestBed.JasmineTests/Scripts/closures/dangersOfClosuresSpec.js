@@ -3,7 +3,7 @@
 
 
 
-describe("dangersOfClosures: ", function () {
+describe("closures dangers: ", function () {
 
     describe("assignTorpedo()", function () {
         var subPassengers = [];

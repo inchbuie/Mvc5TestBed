@@ -51,7 +51,7 @@ namespace Mvc5TestBed.IntegrationTests
         {
             //If you MVC project is not in the root of your solution directory then include the path
             //e.g. AppHost.Simulate("Website\MyMvcApplication")
-            appHost = AppHost.Simulate("Mvc5TestBed.MvcWebApp");
+            appHost = AppHost.Simulate("Mvc5TestBed.MyMvcWebApp");
         }
 
         [Test]

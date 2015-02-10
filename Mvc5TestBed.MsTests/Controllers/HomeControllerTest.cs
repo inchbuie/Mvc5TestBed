@@ -5,8 +5,8 @@ using System.Text;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Mvc5TestBed;
-using Mvc5TestBed.MvcWebApp;
-using Mvc5TestBed.MvcWebApp.Controllers;
+using Mvc5TestBed.MyMvcWebApp;
+using Mvc5TestBed.MyMvcWebApp.Controllers;
 
 namespace Mvc5TestBed.Tests.Controllers
 {

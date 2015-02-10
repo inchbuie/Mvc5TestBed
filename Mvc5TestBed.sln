@@ -16,9 +16,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc5TestBed.IntegrationTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcIntegrationTestFramework", "MvcIntegrationTestFramework\MvcIntegrationTestFramework.csproj", "{2CA1BBC0-788D-49F5-9D6F-C58F2AE312DF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc5TestBed.MvcWebApp", "Mvc5TestBed.MvcWebApp\Mvc5TestBed.MvcWebApp.csproj", "{4C745FFB-E6B5-4245-B9C4-E0EF59FF6055}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc5TestBed.MyMvcWebApp", "Mvc5TestBed.MyMvcWebApp\Mvc5TestBed.MyMvcWebApp.csproj", "{4C745FFB-E6B5-4245-B9C4-E0EF59FF6055}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MvcIntegrationTestFramework.SampleWebApp", "MvcIntegrationTestFramework.SampleWebApp\MvcIntegrationTestFramework.SampleWebApp.csproj", "{3030D25F-8893-48CA-8C78-75869356DA68}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsDemo.SampleWebApp", "SpecsDemo.SampleWebApp\SpecsDemo.SampleWebApp.csproj", "{DDC3146B-EE4C-4A91-AEE5-7252484840C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsDemo.SampleWebAppSpecs", "SpecsDemo.SampleWebAppSpecs\SpecsDemo.SampleWebAppSpecs.csproj", "{B0F8C2FA-1C9C-499E-BDCF-62A00B507A9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +54,14 @@ Global
 		{3030D25F-8893-48CA-8C78-75869356DA68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3030D25F-8893-48CA-8C78-75869356DA68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3030D25F-8893-48CA-8C78-75869356DA68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDC3146B-EE4C-4A91-AEE5-7252484840C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDC3146B-EE4C-4A91-AEE5-7252484840C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDC3146B-EE4C-4A91-AEE5-7252484840C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDC3146B-EE4C-4A91-AEE5-7252484840C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0F8C2FA-1C9C-499E-BDCF-62A00B507A9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0F8C2FA-1C9C-499E-BDCF-62A00B507A9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0F8C2FA-1C9C-499E-BDCF-62A00B507A9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0F8C2FA-1C9C-499E-BDCF-62A00B507A9C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

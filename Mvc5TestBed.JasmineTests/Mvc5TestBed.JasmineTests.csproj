@@ -110,8 +110,10 @@
     <Content Include="Scripts\objects\functionality.js" />
     <Content Include="Scripts\objects\creationAndManipulationSpec.js" />
     <Content Include="Scripts\objects\creationAndManipulation.js" />
-    <Content Include="Scripts\prototypes\prototypesSpec.js" />
-    <Content Include="Scripts\prototypes\prototypes.js" />
+    <Content Include="Scripts\prototypes\constructors.js" />
+    <Content Include="Scripts\prototypes\constructorsSpec.js" />
+    <Content Include="Scripts\prototypes\inheritanceSpec.js" />
+    <Content Include="Scripts\prototypes\inheritance.js" />
   </ItemGroup>
   <ItemGroup />
   <Choose>

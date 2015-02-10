@@ -1,7 +1,7 @@
 ﻿/// <reference path="../jasmine/jasmine.js" />
 /// <reference path="creationAndManipulation.js" />
 
-describe("object creationAndManipulation", function () {
+describe("objects creationAndManipulation", function () {
 
     describe("box", function () {
         var booksArray = [];

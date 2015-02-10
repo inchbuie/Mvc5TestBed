@@ -1,7 +1,7 @@
 ﻿/// <reference path="../jasmine/jasmine.js" />
 /// <reference path="warningMaker.js" />
 
-describe("warningMaker", function () {
+describe("closures warningMaker", function () {
 
     it("should return msg with expected count (6 penguins at ice cave)", function () {
 

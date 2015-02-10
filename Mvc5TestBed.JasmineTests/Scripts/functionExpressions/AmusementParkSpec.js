@@ -1,7 +1,7 @@
 /// <reference path="../jasmine/jasmine.js" />
 /// <reference path="AmusementPark.js" />
 
-describe("AmusementPark", function () {
+describe("function expressions AmusementPark", function () {
     describe("getRideTicket()", function () {
         //var park;
         var parkRides;
