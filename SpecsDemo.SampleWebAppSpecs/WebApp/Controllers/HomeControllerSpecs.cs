@@ -73,7 +73,19 @@ namespace SpecsDemo.SampleWebAppSpecs.WebApp.Controllers
             Assert.That(routeResult.RouteValues["action"], Is.EqualTo("Index"));
             //should call interface method to set name
             mockUser.Verify(x => x.SetName("Jane Doe"));
+        }
 
+        [Test]
+        public void trying_to_set_an_empty_name_fails()
+        {
+            var mockUser = new Mock<ICurrentUser>();
+            var sut = new HomeController(mockUser.Object);
+            var result = sut.SetName(null);
+
+            //should return form again, not redirect
+            Assert.That(result, Is.TypeOf<ViewResult>());
+            //should NOT call interface method to set name
+            mockUser.Verify(x => x.SetName(It.IsAny<string>()), Times.Never);
         }
     }
 }

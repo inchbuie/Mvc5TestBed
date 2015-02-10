@@ -60,6 +60,11 @@ namespace SpecsDemo.SampleWebApp.Controllers
         [HttpPost]
         public ActionResult SetName(string name)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                ViewBag.Error = "You must specify a name!";
+                return View();
+            }
             _currentUser.SetName(name);
             return RedirectToAction("Index");
         }

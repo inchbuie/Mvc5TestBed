@@ -3,6 +3,13 @@
     ViewBag.Title = "Specify Your Name";
 }
 
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">
+        @ViewBag.Error
+    </div>
+}
+
 <h2>SetName</h2>
 @using (Html.BeginForm())
 {
