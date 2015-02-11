@@ -110,6 +110,8 @@
     <Content Include="Scripts\objects\functionality.js" />
     <Content Include="Scripts\objects\creationAndManipulationSpec.js" />
     <Content Include="Scripts\objects\creationAndManipulation.js" />
+    <Content Include="Scripts\prototypes\overridingProtypalMethodsSpecs.js" />
+    <Content Include="Scripts\prototypes\overridingProtypalMethods.js" />
     <Content Include="Scripts\prototypes\constructors.js" />
     <Content Include="Scripts\prototypes\constructorsSpec.js" />
     <Content Include="Scripts\prototypes\inheritanceSpec.js" />
