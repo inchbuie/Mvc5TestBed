@@ -1,5 +1,6 @@
 ﻿using SpecsDemo.SampleWebApp.Domain;
 using SpecsDemo.SampleWebApp.Models;
+using Microsoft.Web.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,10 @@ namespace SpecsDemo.SampleWebApp.Controllers
         [HttpPost]
         public ActionResult SayHello(SayHelloForm form)
         {
-            return RedirectToAction("SayHello", new { name = form.Name });
+            //bad way with magic string:
+            //return RedirectToAction("SayHello", new { name = form.Name });
+            //good way using Microsoft.Web.Mvc Futures
+            return this.RedirectToAction(c => c.SayHello(form.Name));
         }
 
         public ActionResult SetName()
@@ -66,7 +70,8 @@ namespace SpecsDemo.SampleWebApp.Controllers
                 return View();
             }
             _currentUser.SetName(name);
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
+            return this.RedirectToAction(c => c.Index());
         }
     }
 }
