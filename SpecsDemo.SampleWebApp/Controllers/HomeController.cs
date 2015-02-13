@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using SpecsDemo.SampleWebApp.Filters;
 
 namespace SpecsDemo.SampleWebApp.Controllers
 {
@@ -54,6 +55,12 @@ namespace SpecsDemo.SampleWebApp.Controllers
             //return RedirectToAction("SayHello", new { name = form.Name });
             //good way using Microsoft.Web.Mvc Futures
             return this.RedirectToAction(c => c.SayHello(form.Name));
+        }
+
+        [MattOnly]
+        public ActionResult ForMattOnly()
+        {
+            return View();
         }
 
         public ActionResult SetName()

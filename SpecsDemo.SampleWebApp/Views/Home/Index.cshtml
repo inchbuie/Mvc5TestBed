@@ -1,4 +1,6 @@
-﻿@{
+﻿@using SpecsDemo.SampleWebApp.Controllers;
+@using SpecsDemo.SampleWebApp.Helpers;
+@{
     ViewBag.Title = "Home Page";
 }
 
@@ -12,6 +14,10 @@
     <div class="well">
         <p class="lead">
             @ViewBag.Message
+        </p>
+        <p>
+            @(Html.BootstrapActionLinkButton<HomeController>(
+                c => c.SetName(), "Set Your Name"))
         </p>
     </div>
 </div>

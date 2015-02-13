@@ -1,4 +1,4 @@
-﻿
+﻿@using SpecsDemo.SampleWebApp.Helpers
 @{
     ViewBag.Title = "Specify Your Name";
 }
@@ -15,7 +15,7 @@
 {
     <p>
         What is your name? @Html.TextBox("name")
-        <button type="submit">Set Name</button>
+        @Html.BootstrapButton("Set Name")
     </p>
 }
 

@@ -1,0 +1,12 @@
+﻿@using SpecsDemo.SampleWebApp.Controllers;
+@using SpecsDemo.SampleWebApp.Helpers;
+
+@{
+    ViewBag.Title = "Specify Your Name";
+}
+
+<h2>Not Authorized!</h2>
+<p class="lead">You don't <i>look</i> like a Matt. I'm not letting you in.</p>
+<p>
+    @(Html.BootstrapActionLinkButton<HomeController>(c=>c.Index(), "Back Home"))
+</p>

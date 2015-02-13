@@ -38,6 +38,10 @@
     <Reference Include="ExpectedObjects">
       <HintPath>..\packages\ExpectedObjects.1.1.1\lib\net40\ExpectedObjects.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlTags, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\HtmlTags.2.1.0.183\lib\4.0\HtmlTags.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -129,6 +133,8 @@
     <Compile Include="TestEnvironmentSanityCheck.cs" />
     <Compile Include="WebApp\Controllers\HomeControllerSpecs.cs" />
     <Compile Include="WebApp\Controllers\HomeControllerNunitTests.cs" />
+    <Compile Include="WebApp\Filters\MattOnlyAttributeSpecs.cs" />
+    <Compile Include="WebApp\Helpers\BootstrapHelperSpec.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SpecsDemo.SampleWebApp\SpecsDemo.SampleWebApp.csproj">

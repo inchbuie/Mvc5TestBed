@@ -42,6 +42,9 @@
     <Reference Include="Heroic.Web.IoC">
       <HintPath>..\packages\Heroic.Web.IoC.2.3.0\lib\net45\Heroic.Web.IoC.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlTags">
+      <HintPath>..\packages\HtmlTags.2.1.0.183\lib\4.0\HtmlTags.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Web.Mvc">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.Futures.5.0.0\lib\net40\Microsoft.Web.Mvc.dll</HintPath>
@@ -140,11 +143,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\StructureMapConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\MattOnlyAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Domain\CurrentUser.cs" />
     <Compile Include="Domain\ICurrentUser.cs" />
+    <Compile Include="Helpers\BootstrapHelpers.cs" />
     <Compile Include="Models\SayHelloForm.cs" />
     <Compile Include="Models\SayHelloViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -186,6 +191,8 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Home\SetName.cshtml" />
+    <Content Include="Views\Home\YouAreNotMatt.cshtml" />
+    <Content Include="Views\Home\ForMattOnly.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
