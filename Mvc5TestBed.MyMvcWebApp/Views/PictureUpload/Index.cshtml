@@ -1,0 +1,204 @@
+﻿@model Mvc5TestBed.MyMvcWebApp.Models.UploadThingy
+@{
+    ViewBag.Title = "Index";
+}
+
+
+<style>
+    .dropzone {
+        float: left;
+        width: 300px;
+        height: 300px;
+        border: 1px solid #cccccc;
+        border-radius: 7px;
+        padding: 10px;
+    }
+</style>
+
+@Styles.Render("~/Content/jquery.Jcrop.css")
+
+@Scripts.Render("~/Scripts/jquery-1.10.2.js")
+@Scripts.Render("~/Scripts/jquery.color.js")
+@Scripts.Render("~/Scripts/jquery.Jcrop.js")
+
+<div class="container">
+    @using (Html.BeginForm("Upload", "PictureUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="row">
+            <div id="initialInfo" class="infoBox">
+                <h3>Choose Image to Upload</h3>
+
+                <input id="imageFileInput" name="pictureFiles" type="file" accept="image/*" multiple>
+                <div id="dropzone" class="dropzone">
+                    Or drag/drop image file(s) here
+
+                    <img id="cropTarget" src="" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <input type="submit" value="Send to Server">
+        </div>
+        <div class="row">
+            <div id="initialInfo" class="infoBox">
+                <label id="dragInfo"></label>
+                <ul id="draggedFiles"></ul>
+            </div>
+        </div>
+    }
+    @*@if (!string.IsNullOrWhiteSpace(Model.ImgUrl))
+        <img id="cropTarget" src="@(Model.ImgUrl)" />
+        <canvas id="myCanvas" width="360" height="360"></canvas>*@
+</div>
+
+
+<script type="text/javascript">
+    function showCoords(c) {
+        // variables can be accessed here as
+        // c.x, c.y, c.x2, c.y2, c.w, c.h
+        console.log(c.x + "," + c.y + "," + c.x2 + "," + c.y2 + "," + c.w + "," + c.h)
+
+        var canvas = document.getElementById("myCanvas");//$("#myCanvas");
+        var context = canvas.getContext("2d");
+        var imageObj = new Image();
+
+        imageObj.onload = function () {
+            // draw cropped image
+            var sourceX = c.x;
+            var sourceY = c.y;
+            var sourceWidth = c.x2 - c.x;//c.w; //c.x2-c.x;
+            var sourceHeight = c.y2 - c.y;//c.h; //c.y2-c.y;
+            //var destWidth = sourceWidth;
+            //var destHeight = sourceHeight;
+            //var destX = canvas.width / 2 - destWidth / 2;
+            //var destY = canvas.height / 2 - destHeight / 2;
+            var destWidth = canvas.width;
+            var destHeight = canvas.height;
+            var destX = 1;
+            var destY = 1;
+
+            context.drawImage(imageObj, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+        };
+        imageObj.src = '@(Model.ImgUrl)';
+    };
+
+    function reportUploadInfo(fileList) {
+
+        var label = $("#dragInfo");
+        label.html("You've just chosen" + fileList.length + " file(s)");
+        var ul = $("#draggedFiles");
+        ul.empty();
+
+        // You've selected input.files.length files
+        for (var i = 0; i < fileList.length; i++) {
+            var li = document.createElement("li");
+            $(li).html(fileList[i].name);
+            ul.append(li);
+        }
+    }
+    
+    function previewImage(imageFile) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+           // $("#dropzone").css("background-image", e.target.result);
+            $("#cropTarget").attr("src", e.target.result);
+            //if (height>width) {
+            //$("#cropTarget").height("100%");
+            //$("#cropTarget").width("auto");
+            //}else{
+            //$("#cropTarget").width("100%");
+            jQuery(function ($) {
+                $("#cropTarget").Jcrop({
+                    onSelect: showCoords
+                    ,onChange: showCoords
+                    ,bgColor: 'black'
+                    ,bgOpacity: .4
+                    ,setSelect: [100, 100, 50, 50]
+                    , aspectRatio: 16 / 9
+                });
+            });
+        }
+        reader.readAsDataURL(imageFile);
+        //$("#cropTarget").height("200px");
+        //$("#cropTarget").width("100%");
+        //$("#cropTarget").show();
+    }
+
+    $(document).ready(function () {
+        dropzone.addEventListener("dragover", function (event) {
+            console.log("dragover");
+            event.preventDefault();
+
+            //event.target.style.border = "2px solid #9ecaed";
+            $(event.target).css("outline", "none");
+            $(event.target).css("border-color", "#9ecaed");
+            $(event.target).css("box-shadow", "1px 1px 10px #9ecaed");
+        }, true);
+        dropzone.addEventListener("drop", function (event) {
+            console.log("drop");
+            event.preventDefault();
+            // Ready to do something with the dropped object
+            event.target.style.border = "1px solid #cccccc";
+            reportUploadInfo(event.dataTransfer.files);
+        }, true);
+
+        dropzone.addEventListener("dragleave", function (event) {
+            console.log("dragleave");
+            event.preventDefault();
+            $(event.target).css("border-color", "");
+            $(event.target).css("box-shadow", "");
+            event.target.style.border = "1px solid #cccccc";
+        }, true);
+
+        $("#imageFileInput").change(function () {
+            reportUploadInfo(this.files);
+            if (this.files && this.files.length > 0) {
+                previewImage(this.files[0]);
+            }
+        });
+
+    });
+</script>
+
+<script type="text/javascript">
+    @*function showCoords(c) {
+        // variables can be accessed here as
+        // c.x, c.y, c.x2, c.y2, c.w, c.h
+        console.log(c.x + "," + c.y + "," + c.x2 + "," + c.y2 + "," + c.w + "," + c.h)
+
+        var canvas = document.getElementById("myCanvas");//$("#myCanvas");
+        var context = canvas.getContext("2d");
+        var imageObj = new Image();
+
+        imageObj.onload = function () {
+            // draw cropped image
+            var sourceX = c.x;
+            var sourceY = c.y;
+            var sourceWidth = c.x2-c.x;//c.w; //c.x2-c.x;
+            var sourceHeight = c.y2 - c.y;//c.h; //c.y2-c.y;
+            //var destWidth = sourceWidth;
+            //var destHeight = sourceHeight;
+            //var destX = canvas.width / 2 - destWidth / 2;
+            //var destY = canvas.height / 2 - destHeight / 2;
+            var destWidth = canvas.width;
+            var destHeight = canvas.height;
+            var destX = 1;
+            var destY = 1;
+
+            context.drawImage(imageObj, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
+        };
+        imageObj.src = '@(Model.ImgUrl)';
+    };*@
+
+
+    //jQuery(function ($) {
+        //$('#cropTarget').Jcrop({
+        //    onSelect: showCoords
+        //    //,onChange: showCoords
+        //    //,bgColor: 'black'
+        //    //,bgOpacity: .4
+        //    //,setSelect: [100, 100, 50, 50]
+        //   //, aspectRatio: 16 / 9
+        //});
+    //});
+</script>
