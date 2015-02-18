@@ -76,5 +76,11 @@ namespace Mvc5TestBed.MyMvcWebApp.Controllers
             };
             return View("DragUpload", o);
         }
+
+
+        public ActionResult ClientSideCrop()
+        {
+            return View();
+        }
     }
 }
