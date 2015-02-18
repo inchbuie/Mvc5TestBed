@@ -21,6 +21,16 @@
 @Scripts.Render("~/Scripts/jquery.color.js")
 @Scripts.Render("~/Scripts/jquery.Jcrop.js")
 
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('#cropTarget').Jcrop({
+            onSelect: cropSelectEvent
+            , trackDocument: true
+        });
+    });
+</script>
+
+
 <div class="container">
     @using (Html.BeginForm("Upload", "PictureUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
@@ -32,7 +42,8 @@
                 <div id="dropzone" class="dropzone">
                     Or drag/drop image file(s) here
 
-                    <img id="cropTarget" src="" />
+                    @*<img id="cropTarget" src="" />*@
+                    @*<canvas id="myCanvas"></canvas>*@
                 </div>
             </div>
         </div>
@@ -46,14 +57,13 @@
             </div>
         </div>
     }
-    @*@if (!string.IsNullOrWhiteSpace(Model.ImgUrl))
-        <img id="cropTarget" src="@(Model.ImgUrl)" />
-        <canvas id="myCanvas" width="360" height="360"></canvas>*@
+    @*@if (!string.IsNullOrWhiteSpace(Model.ImgUrl))*@
+        @*<img id="cropTarget" src="@(Model.ImgUrl)" />*@
 </div>
 
 
 <script type="text/javascript">
-    function showCoords(c) {
+    function cropSelectEvent(c) {
         // variables can be accessed here as
         // c.x, c.y, c.x2, c.y2, c.w, c.h
         console.log(c.x + "," + c.y + "," + c.x2 + "," + c.y2 + "," + c.w + "," + c.h)
@@ -100,23 +110,31 @@
     function previewImage(imageFile) {
         var reader = new FileReader();
         reader.onload = function (e) {
+            var img = document.createElement("img");
+            img.src = e.target.result;
            // $("#dropzone").css("background-image", e.target.result);
-            $("#cropTarget").attr("src", e.target.result);
+            //$("#cropTarget").attr("src", e.target.result);
             //if (height>width) {
             //$("#cropTarget").height("100%");
             //$("#cropTarget").width("auto");
             //}else{
             //$("#cropTarget").width("100%");
-            jQuery(function ($) {
-                $("#cropTarget").Jcrop({
-                    onSelect: showCoords
-                    ,onChange: showCoords
-                    ,bgColor: 'black'
-                    ,bgOpacity: .4
-                    ,setSelect: [100, 100, 50, 50]
-                    , aspectRatio: 16 / 9
-                });
-            });
+            //jQuery(function ($) {
+            //    $("#cropTarget").Jcrop({
+            //        onSelect: showCoords
+            //        ,onChange: showCoords
+            //        ,bgColor: 'black'
+            //        ,bgOpacity: .4
+            //        ,setSelect: [100, 100, 50, 50]
+            //        , aspectRatio: 16 / 9
+            //    });
+            //});
+            var canvas = document.createElement("canvas");
+            canvas.width = $("#dropzone").width();
+            canvas.height = $("#dropzone").height();
+            var context = canvas.getContext("2d");
+            context.drawImage(img, 0, 0);
+            $("#dropzone").html(canvas);
         }
         reader.readAsDataURL(imageFile);
         //$("#cropTarget").height("200px");
@@ -125,80 +143,47 @@
     }
 
     $(document).ready(function () {
-        dropzone.addEventListener("dragover", function (event) {
-            console.log("dragover");
-            event.preventDefault();
-
-            //event.target.style.border = "2px solid #9ecaed";
-            $(event.target).css("outline", "none");
-            $(event.target).css("border-color", "#9ecaed");
-            $(event.target).css("box-shadow", "1px 1px 10px #9ecaed");
-        }, true);
-        dropzone.addEventListener("drop", function (event) {
-            console.log("drop");
-            event.preventDefault();
-            // Ready to do something with the dropped object
-            event.target.style.border = "1px solid #cccccc";
-            reportUploadInfo(event.dataTransfer.files);
-        }, true);
-
-        dropzone.addEventListener("dragleave", function (event) {
-            console.log("dragleave");
-            event.preventDefault();
-            $(event.target).css("border-color", "");
-            $(event.target).css("box-shadow", "");
-            event.target.style.border = "1px solid #cccccc";
-        }, true);
-
-        $("#imageFileInput").change(function () {
-            reportUploadInfo(this.files);
-            if (this.files && this.files.length > 0) {
-                previewImage(this.files[0]);
-            }
-        });
-
     });
-</script>
-
-<script type="text/javascript">
-    @*function showCoords(c) {
-        // variables can be accessed here as
-        // c.x, c.y, c.x2, c.y2, c.w, c.h
-        console.log(c.x + "," + c.y + "," + c.x2 + "," + c.y2 + "," + c.w + "," + c.h)
-
-        var canvas = document.getElementById("myCanvas");//$("#myCanvas");
-        var context = canvas.getContext("2d");
-        var imageObj = new Image();
-
-        imageObj.onload = function () {
-            // draw cropped image
-            var sourceX = c.x;
-            var sourceY = c.y;
-            var sourceWidth = c.x2-c.x;//c.w; //c.x2-c.x;
-            var sourceHeight = c.y2 - c.y;//c.h; //c.y2-c.y;
-            //var destWidth = sourceWidth;
-            //var destHeight = sourceHeight;
-            //var destX = canvas.width / 2 - destWidth / 2;
-            //var destY = canvas.height / 2 - destHeight / 2;
-            var destWidth = canvas.width;
-            var destHeight = canvas.height;
-            var destX = 1;
-            var destY = 1;
-
-            context.drawImage(imageObj, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
-        };
-        imageObj.src = '@(Model.ImgUrl)';
-    };*@
 
 
-    //jQuery(function ($) {
-        //$('#cropTarget').Jcrop({
-        //    onSelect: showCoords
-        //    //,onChange: showCoords
-        //    //,bgColor: 'black'
-        //    //,bgOpacity: .4
-        //    //,setSelect: [100, 100, 50, 50]
-        //   //, aspectRatio: 16 / 9
-        //});
-    //});
+    function dragOverEvent(event) {
+        console.log("dragover");
+        event.preventDefault();
+
+        //event.target.style.border = "2px solid #9ecaed";
+        $(event.target).css("outline", "none");
+        $(event.target).css("border-color", "#9ecaed");
+        $(event.target).css("box-shadow", "1px 1px 10px #9ecaed");
+    }
+
+    function dragLeaveEvent(event) {
+        console.log("dragleave");
+        event.preventDefault();
+        $(event.target).css("border-color", "");
+        $(event.target).css("box-shadow", "");
+        event.target.style.border = "1px solid #cccccc";
+    }
+
+    function dragDropEvent(event) {
+        console.log("drop");
+        event.preventDefault();
+        // Ready to do something with the dropped object
+        event.target.style.border = "1px solid #cccccc";
+        reportUploadInfo(event.dataTransfer.files);
+        if (event.dataTransfer.files.length > 0) {
+            previewImage(event.dataTransfer.files[0]);
+        }
+    }
+
+    $("#imageFileInput").change(function () {
+        reportUploadInfo(this.files);
+        if (this.files && this.files.length > 0) {
+            previewImage(this.files[0]);
+        }
+    });
+
+
+    dropzone.addEventListener("dragover", dragOverEvent, true);
+    dropzone.addEventListener("dragleave", dragLeaveEvent, true);
+    dropzone.addEventListener("drop", dragDropEvent, true);
 </script>

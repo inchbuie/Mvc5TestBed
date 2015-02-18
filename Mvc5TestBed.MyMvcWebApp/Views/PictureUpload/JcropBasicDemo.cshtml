@@ -1,0 +1,52 @@
+﻿@{
+    ViewBag.Title = "jCrop";
+}
+
+
+<style>
+    .dropzone {
+        float: left;
+        width: 300px;
+        height: 300px;
+        border: 1px solid #cccccc;
+        border-radius: 7px;
+        padding: 10px;
+    }
+</style>
+
+@Styles.Render("~/Content/jquery.Jcrop.css")
+
+@Scripts.Render("~/Scripts/jquery-1.10.2.js")
+@Scripts.Render("~/Scripts/jquery.color.js")
+@Scripts.Render("~/Scripts/jquery.Jcrop.js")
+
+<script type="text/javascript">
+    jQuery(function ($) {
+        $('#cropTarget').Jcrop({
+            onSelect: showCoords
+            ,trackDocument: true
+        });
+    });
+</script>
+
+
+<div class="container">
+    <h2>Basic jCrop Demo</h2>
+    <img id="cropTarget" src="~/images/darth.png" />
+    <div>
+        Click and drag on the image to select an area using jCrop
+    </div>
+</div>
+
+
+
+<script type="text/javascript">
+
+    function showCoords(c) {
+        // variables can be accessed here as
+        // c.x, c.y, c.x2, c.y2, c.w, c.h
+        console.log(c.x + "," + c.y + "," + c.x2 + "," + c.y2 + "," + c.w + "," + c.h)
+
+    };
+
+</script>
