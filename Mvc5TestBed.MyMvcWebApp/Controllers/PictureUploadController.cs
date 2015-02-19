@@ -1,6 +1,8 @@
 ﻿using Mvc5TestBed.MyMvcWebApp.Models;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,6 +21,23 @@ namespace Mvc5TestBed.MyMvcWebApp.Controllers
             return View("Index", info);
         }
 
+        private Image GetImage(HttpPostedFileBase pictureFile)
+        {
+            var img = Image.FromStream(pictureFile.InputStream, true, true);
+            return img;
+        }
+
+        public byte[] CreateBytesForImg(Image img)
+        {
+            byte[] bytes;
+            using (var memStream = new MemoryStream())
+            {
+                img.Save(memStream, ImageFormat.Jpeg);
+                bytes = memStream.ToArray();
+            }
+            return bytes;
+        }
+
         [HttpPost]
         public ActionResult Upload(IEnumerable<HttpPostedFileBase> pictureFiles)
         {
@@ -30,17 +49,13 @@ namespace Mvc5TestBed.MyMvcWebApp.Controllers
                 pathToSave = Path.Combine(
                    AppDomain.CurrentDomain.BaseDirectory,
                    Path.GetFileName(pictureFile.FileName));
-                //pictureFile.SaveAs(pathToSave);
+
+                ViewBag.ImageBytes = CreateBytesForImg(GetImage(pictureFile));
 
                 //for now just do 1...
                 break;
             }
-            var o = new UploadThingy()
-            {
-                //as test, ignore path &hard-code this                
-                ImgUrl = Url.Content("~/images/darth.png")
-            };
-            return View("Index", o);
+            return View("Index");
         }
 
         public ActionResult JcropBasicDemo()

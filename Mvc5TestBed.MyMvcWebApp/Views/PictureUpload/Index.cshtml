@@ -1,5 +1,4 @@
-﻿@model Mvc5TestBed.MyMvcWebApp.Models.UploadThingy
-@{
+﻿@{
     ViewBag.Title = "Index";
 }
 
@@ -16,13 +15,10 @@
 </style>
 
 @Styles.Render("~/Content/jquery.Jcrop.css")
+
 @*MUST REMOVE Jquery Bundle from _layout & refer like this (not sure why???)*@
 @Scripts.Render("~/Scripts/jquery-1.10.2.js")
-@*@Scripts.Render("~/Scripts/jquery.color.js")*@
-
 @Scripts.Render("~/Scripts/jquery.Jcrop.js")
-
-
 
 
 <div class="container">
@@ -33,15 +29,23 @@
                 <h3>Choose Image to Upload</h3>
 
                 <input class="btn btn-default" id="imageFileInput" name="pictureFiles" type="file" accept="image/*" multiple>
-                @*<img id="imgPreview" class="dropzone">*@
+
                 <div id="dropzone" class="dropzone">
-                    Or drag/drop image file(s) here
+                    @if (null != ViewBag.ImageBytes)
+                    {
+                        <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String((byte[])ViewBag.ImageBytes)))" style="width:100%"/>
+                    }
+                    else
+                    {
+                        @: or drag/drop image file(s) here
+                    }
                 </div>
             </div>
         </div>
         <div class="row">
             <button id="cropButton" class="btn btn-default" type="button" disabled="disabled">Crop</button>
-            <input type="submit" value="Send to Server" class="btn btn-default">
+            <input id="frmSubmit" type="submit" value="Send to Server" class="btn btn-default">
+            <button id="doneWithCropButton" class="btn btn-default" type="button" disabled="disabled">Done Cropping</button>
         </div>
         <div class="row">
             <div id="initialInfo" class="infoBox">
@@ -50,20 +54,13 @@
             </div>
         </div>
     }
-    @*@if (!string.IsNullOrWhiteSpace(Model.ImgUrl))*@
-    @*<img id="cropTarget" src="@(Model.ImgUrl)" />*@
 </div>
 
 
 <script type="text/javascript">
 
-    var jCropApi;
-    jQuery(function ($) {
-        jCropApi = $('#xxxx').Jcrop({
-            onSelect: cropSelectEvent
-            , trackDocument: true
-        });
-    });
+    var jCropApi = {};
+    var currentCropSelection = {};
 
     function dragOverEvent(event) {
         console.log("dragover");
@@ -101,33 +98,31 @@
         }
     });
 
-    function cropSelectEvent(c) {
+    function cropChangeEvent(c) {
         // variables can be accessed here as
         // c.x, c.y, c.x2, c.y2, c.w, c.h
         console.log(c.x + "," + c.y + "," + c.x2 + "," + c.y2 + "," + c.w + "," + c.h)
+    };
 
-        //var canvas = document.getElementById("myCanvas");//$("#myCanvas");
-        //var context = canvas.getContext("2d");
-        //var imageObj = new Image();
+    function cropSelectEvent(selection) {
 
-        //imageObj.onload = function () {
-        //    // draw cropped image
-        //    var sourceX = c.x;
-        //    var sourceY = c.y;
-        //    var sourceWidth = c.x2 - c.x;//c.w; //c.x2-c.x;
-        //    var sourceHeight = c.y2 - c.y;//c.h; //c.y2-c.y;
-        //    //var destWidth = sourceWidth;
-        //    //var destHeight = sourceHeight;
-        //    //var destX = canvas.width / 2 - destWidth / 2;
-        //    //var destY = canvas.height / 2 - destHeight / 2;
-        //    var destWidth = canvas.width;
-        //    var destHeight = canvas.height;
-        //    var destX = 1;
-        //    var destY = 1;
+        console.log(selection.x + "," + selection.y + "," + selection.w + "," + selection.h)
 
-        //    context.drawImage(imageObj, sourceX, sourceY, sourceWidth, sourceHeight, destX, destY, destWidth, destHeight);
-        //};
-        //imageObj.src = '@(Model.ImgUrl)';
+        var img = $('#dropzone img')[0];
+        var canvas = document.createElement("canvas");
+
+
+        var w = $("#dropzone").width();
+        canvas.width = w;
+        canvas.height = selection.h * (w / selection.w);
+        var ctx = canvas.getContext('2d');
+        ctx.drawImage(img, selection.x, selection.y, selection.w, selection.h, 0, 0, canvas.width, canvas.height);
+
+        //store selected sub-image as a data url in global var
+        currentCropSelection = canvas.toDataURL();
+        //    $('#image_output').attr('src', canvas.toDataURL());
+        //    $('#image_source').text(canvas.toDataURL());
+
     };
 
     function reportUploadInfo(fileList) {
@@ -137,7 +132,6 @@
         var ul = $("#draggedFiles");
         ul.empty();
 
-        // You've selected input.files.length files
         for (var i = 0; i < fileList.length; i++) {
             var li = document.createElement("li");
             $(li).html(fileList[i].name);
@@ -145,169 +139,91 @@
         }
     }
 
-    function readData(evt) {
-        evt.stopPropagation();
-        evt.preventDefault();
-        var file = evt.dataTransfer !== undefined ? evt.dataTransfer.files[0] : evt.target.files[0];
-        var reader = new FileReader();
-        reader.onload = (function(theFile) {
-            return function(e) {
-                var image = new Image();
-                image.src = e.target.result;
-                image.onload = function() {
-                    var canvas = document.createElement('canvas');
-                    canvas.width = 400;
-                    canvas.height = image.height * (400 / image.width);
-                    var ctx = canvas.getContext('2d');
-                    ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-                    $('#image_input').html(['<img src="', canvas.toDataURL(), '"/>'].join(''));
-
-                    var img = $('#image_input img')[0];
-                    var canvas = document.createElement('canvas');
-
-                    $('#image_input img').Jcrop({
-                        bgColor: 'black',
-                        bgOpacity: .6,
-                        setSelect: [0, 0, 100, 100],
-                        aspectRatio: 1,
-                        onSelect: imgSelect,
-                        onChange: imgSelect
-                    });
-
-                    function imgSelect(selection) {
-                        canvas.width = canvas.height = 100;
-            
-                        var ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, selection.x, selection.y, selection.w, selection.h, 0, 0, canvas.width, canvas.height);
-                    
-                        $('#image_output').attr('src', canvas.toDataURL());
-                        $('#image_source').text(canvas.toDataURL());
-                    }
-                }
-            }
-        })(file);
-        reader.readAsDataURL(file);
-    }
-
     function previewImage(imageFile) {
         var reader = new FileReader();
         reader.onload = (function (theFile) {
 
             return function (e) {
-                //var img = document.createElement("img");
-                //img.src = e.target.result;
-                //img.id = "cropTarget";
                 var image = new Image();
                 image.src = e.target.result;
                 image.onload = function () {
-                    var canvas1 = document.createElement("canvas");
-                    //canvas.id = "myCanvas";
+                    var canvas = document.createElement("canvas");
 
                     var w = $("#dropzone").width();
-                    canvas1.width = w;
-                    canvas1.height = image.height * (w / image.width);
-                    var context = canvas1.getContext("2d");
-                    context.drawImage(image, 0, 0, canvas1.width, canvas1.height);
+                    canvas.width = w;
+                    canvas.height = image.height * (w / image.width);
+                    var context = canvas.getContext("2d");
+                    context.drawImage(image, 0, 0, canvas.width, canvas.height);
 
-
-                    $("#dropzone").html(['<img src="', canvas1.toDataURL(), '"/>'].join(''));
-
-                    //var img = $('#image_input img')[0];
-                    //var canvas2 = document.createElement('canvas')
-
-                    var initialSelectBox = [0, 0, 100, 100];
-
-                    $("#dropzone img").Jcrop({
-                        bgColor: 'black',
-                        bgOpacity: .6,
-                        setSelect: initialSelectBox,
-                        aspectRatio: 1,
-                        onSelect: cropSelectEvent,
-                        onChange: cropSelectEvent
-                    });
-                    //function imgSelect(selection) {
-                    //    canvas.width = canvas.height = 100;
-
-                    //    var ctx = canvas.getContext('2d');
-                    //    ctx.drawImage(img, selection.x, selection.y, selection.w, selection.h, 0, 0, canvas.width, canvas.height);
-
-                    //    $('#image_output').attr('src', canvas.toDataURL());
-                    //    $('#image_source').text(canvas.toDataURL());
-                    //}
+                    $("#dropzone").html(['<img src="', canvas.toDataURL(), '"/>'].join(''));
                 };
             }
         })(imageFile);
-
-        //var MAX_WIDTH = 800;
-        //var MAX_HEIGHT = 600;
-        //var width = img.width;
-        //var height = img.height;
-
-        //if (width > height) {
-        //    if (width > MAX_WIDTH) {
-        //        height *= MAX_WIDTH / width;
-        //        width = MAX_WIDTH;
-        //    }
-        //} else {
-        //    if (height > MAX_HEIGHT) {
-        //        width *= MAX_HEIGHT / height;
-        //        height = MAX_HEIGHT;
-        //    }
-        //}
-
-        //var canvas = document.createElement("canvas");
-        //canvas.id = "myCanvas";
-        //$("#dropzone").width(width);
-        //$("#dropzone").height(height);
-        //canvas.width = width;
-        //canvas.height = height;
-        //var context = canvas.getContext("2d");
-        //context.drawImage(img, 0, 0);
-        //$("#dropzone").html(canvas);
 
         reader.readAsDataURL(imageFile);
         $('#cropButton').prop('disabled', false);
     }
 
     $("#cropButton").click(function () {
-        //var jcropApi = $('#cropTarget').Jcrop
-        jCropApi.enable();
+
+        if ($("#dropzone img").length > 0) {
+
+            $('#imageFileInput').prop('disabled', true);
+            $('#frmSubmit').prop('disabled', true);
+            $('#cropButton').prop('disabled', true);
+            $('#doneWithCropButton').prop('disabled', false);
+
+            var imageToCrop = $("#dropzone img")[0];
+            var startX = imageToCrop.width / 2 - imageToCrop.width / 4;
+            var startY = startX;
+            var endX = startX;
+            var endY = startX;
+            var initialSelectBox = [startX, startY, endX, endY];
+
+            $("#dropzone img").Jcrop({
+                bgColor: 'black',
+                bgOpacity: .6,
+                setSelect: initialSelectBox,
+                aspectRatio: 1,
+                onSelect: cropSelectEvent,
+                onChange: cropChangeEvent
+            }, function () {
+                //store jCrop reference in global
+                jCropApi = this;
+            });
+
+            //or
+            //jCropApi.animateTo(initialSelectBox);
+        }
+    });
+
+    $("#doneWithCropButton").click(function () {
+
+        //var imageFromCrop = new Image();
+        if (currentCropSelection) {
+            var imageFromCrop = document.createElement("img");
+            imageFromCrop.src = currentCropSelection;
+            //$("#dropzone").html(['<img src="', currentCropSelection, '"/>'].join(''));
+            $("#dropzone").html(imageFromCrop);
+        }
+
+        if (jCropApi) {
+            jCropApi.release();
+            jCropApi.disable();
+        }
+
+        $('#imageFileInput').prop('disabled', false);
+        $('#frmSubmit').prop('disabled', false);
+        $('#cropButton').prop('disabled', false);
+        $('#doneWithCropButton').prop('disabled', true);
+
+
     });
 
     $(document).ready(function () {
-
-
         dropzone.addEventListener("dragover", dragOverEvent, true);
         dropzone.addEventListener("dragleave", dragLeaveEvent, true);
         dropzone.addEventListener("drop", dragDropEvent, true);
-
-
-        //initJcrop();
-
-        function initJcrop() {
-            //jQuery(function ($) {
-            //    $('#cropTarget').Jcrop({
-            //        onSelect: cropSelectEvent
-            //        , trackDocument: true
-            //    });
-            //});
-            //jcrop_api = $.Jcrop('#cropTarget');
-            //jcrop_api = $('#cropTarget').Jcrop({
-            //    onSelect: cropSelectEvent
-            //, trackDocument: true
-            //});
-            //$('#cropTarget').Jcrop();
-
-            // var jcropApi = $('#cropTarget').Jcrop();
-
-            //jcropApi = $('#cropTarget')[0].Jcrop();
-
-            // $.Jcrop($('img')[0], options)
-        }
     });
-    //$(window).load(function () {
-    //    jCropApi = $.Jcrop($("#xxxx"));
-    //});
 
 </script>
