@@ -1,7 +1,7 @@
-﻿@{
+﻿@model Mvc5TestBed.MyMvcWebApp.Models.ProfileImage
+@{
     ViewBag.Title = "Index";
 }
-
 
 <style>
     .dropzone {
@@ -22,208 +22,42 @@
 
 
 <div class="container">
-    @using (Html.BeginForm("Upload", "PictureUpload", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {
-        <div class="row">
-            <div id="initialInfo" class="infoBox">
-                <h3>Choose Image to Upload</h3>
-
-                <input class="btn btn-default" id="imageFileInput" name="pictureFiles" type="file" accept="image/*" multiple>
+    <div class="row">
+        <div id="initialInfo" class="infoBox">
+            <h3>Choose Image to Upload</h3>
+            <input class="btn btn-default" id="imageFileInput" name="pictureFiles" type="file" accept="image/*" multiple>
+        </div>
+    </div>
+    <div class="row">
+        @using (Html.BeginForm("Upload", "PictureUpload", FormMethod.Post, new { @id = "frmImageUpload", enctype = "multipart/form-data" }))
+        {
+            <div class="row">
+                @Html.HiddenFor(m => m.ImageData, new { @id = "hiddenImageData", })
 
                 <div id="dropzone" class="dropzone">
-                    @if (null != ViewBag.ImageBytes)
+                    @if (null != Model.ImageData)
                     {
-                        <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String((byte[])ViewBag.ImageBytes)))" style="width:100%"/>
+                        <img src="data:image/jpg;base64,@(Html.Raw(Convert.ToBase64String((byte[])Model.ImageData)))" style="width:100%" />
                     }
                     else
                     {
                         @: or drag/drop image file(s) here
-                    }
+        }
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <button id="cropButton" class="btn btn-default" type="button" disabled="disabled">Crop</button>
-            <input id="frmSubmit" type="submit" value="Send to Server" class="btn btn-default">
-            <button id="doneWithCropButton" class="btn btn-default" type="button" disabled="disabled">Done Cropping</button>
-        </div>
+            <div class="row">
+                <button id="cropButton" class="btn btn-default" type="button" @((null == Model.ImageData)?"disabled=\"disabled\"":"")>Crop</button>
+                <input id="frmSubmit" type="submit" value="Send to Server" class="btn btn-default">
+                <button id="doneWithCropButton" class="btn btn-default" type="button" disabled="disabled">Done Cropping</button>
+            </div>
+        }
         <div class="row">
             <div id="initialInfo" class="infoBox">
                 <label id="dragInfo"></label>
                 <ul id="draggedFiles"></ul>
             </div>
         </div>
-    }
+    </div>
 </div>
-
-
-<script type="text/javascript">
-
-    var jCropApi = {};
-    var currentCropSelection = {};
-
-    function dragOverEvent(event) {
-        console.log("dragover");
-        event.preventDefault();
-
-        //event.target.style.border = "2px solid #9ecaed";
-        $(event.target).css("outline", "none");
-        $(event.target).css("border-color", "#9ecaed");
-        $(event.target).css("box-shadow", "1px 1px 10px #9ecaed");
-    }
-
-    function dragLeaveEvent(event) {
-        console.log("dragleave");
-        event.preventDefault();
-        $(event.target).css("border-color", "");
-        $(event.target).css("box-shadow", "");
-        event.target.style.border = "1px solid #cccccc";
-    }
-
-    function dragDropEvent(event) {
-        console.log("drop");
-        event.preventDefault();
-        // Ready to do something with the dropped object
-        event.target.style.border = "1px solid #cccccc";
-        reportUploadInfo(event.dataTransfer.files);
-        if (event.dataTransfer.files.length > 0) {
-            previewImage(event.dataTransfer.files[0]);
-        }
-    }
-
-    $("#imageFileInput").change(function () {
-        reportUploadInfo(this.files);
-        if (this.files && this.files.length > 0) {
-            previewImage(this.files[0]);
-        }
-    });
-
-    function cropChangeEvent(c) {
-        // variables can be accessed here as
-        // c.x, c.y, c.x2, c.y2, c.w, c.h
-        console.log(c.x + "," + c.y + "," + c.x2 + "," + c.y2 + "," + c.w + "," + c.h)
-    };
-
-    function cropSelectEvent(selection) {
-
-        console.log(selection.x + "," + selection.y + "," + selection.w + "," + selection.h)
-
-        var img = $('#dropzone img')[0];
-        var canvas = document.createElement("canvas");
-
-
-        var w = $("#dropzone").width();
-        canvas.width = w;
-        canvas.height = selection.h * (w / selection.w);
-        var ctx = canvas.getContext('2d');
-        ctx.drawImage(img, selection.x, selection.y, selection.w, selection.h, 0, 0, canvas.width, canvas.height);
-
-        //store selected sub-image as a data url in global var
-        currentCropSelection = canvas.toDataURL();
-        //    $('#image_output').attr('src', canvas.toDataURL());
-        //    $('#image_source').text(canvas.toDataURL());
-
-    };
-
-    function reportUploadInfo(fileList) {
-
-        var label = $("#dragInfo");
-        label.html("You've just chosen" + fileList.length + " file(s)");
-        var ul = $("#draggedFiles");
-        ul.empty();
-
-        for (var i = 0; i < fileList.length; i++) {
-            var li = document.createElement("li");
-            $(li).html(fileList[i].name);
-            ul.append(li);
-        }
-    }
-
-    function previewImage(imageFile) {
-        var reader = new FileReader();
-        reader.onload = (function (theFile) {
-
-            return function (e) {
-                var image = new Image();
-                image.src = e.target.result;
-                image.onload = function () {
-                    var canvas = document.createElement("canvas");
-
-                    var w = $("#dropzone").width();
-                    canvas.width = w;
-                    canvas.height = image.height * (w / image.width);
-                    var context = canvas.getContext("2d");
-                    context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-                    $("#dropzone").html(['<img src="', canvas.toDataURL(), '"/>'].join(''));
-                };
-            }
-        })(imageFile);
-
-        reader.readAsDataURL(imageFile);
-        $('#cropButton').prop('disabled', false);
-    }
-
-    $("#cropButton").click(function () {
-
-        if ($("#dropzone img").length > 0) {
-
-            $('#imageFileInput').prop('disabled', true);
-            $('#frmSubmit').prop('disabled', true);
-            $('#cropButton').prop('disabled', true);
-            $('#doneWithCropButton').prop('disabled', false);
-
-            var imageToCrop = $("#dropzone img")[0];
-            var startX = imageToCrop.width / 2 - imageToCrop.width / 4;
-            var startY = startX;
-            var endX = startX;
-            var endY = startX;
-            var initialSelectBox = [startX, startY, endX, endY];
-
-            $("#dropzone img").Jcrop({
-                bgColor: 'black',
-                bgOpacity: .6,
-                setSelect: initialSelectBox,
-                aspectRatio: 1,
-                onSelect: cropSelectEvent,
-                onChange: cropChangeEvent
-            }, function () {
-                //store jCrop reference in global
-                jCropApi = this;
-            });
-
-            //or
-            //jCropApi.animateTo(initialSelectBox);
-        }
-    });
-
-    $("#doneWithCropButton").click(function () {
-
-        //var imageFromCrop = new Image();
-        if (currentCropSelection) {
-            var imageFromCrop = document.createElement("img");
-            imageFromCrop.src = currentCropSelection;
-            //$("#dropzone").html(['<img src="', currentCropSelection, '"/>'].join(''));
-            $("#dropzone").html(imageFromCrop);
-        }
-
-        if (jCropApi) {
-            jCropApi.release();
-            jCropApi.disable();
-        }
-
-        $('#imageFileInput').prop('disabled', false);
-        $('#frmSubmit').prop('disabled', false);
-        $('#cropButton').prop('disabled', false);
-        $('#doneWithCropButton').prop('disabled', true);
-
-
-    });
-
-    $(document).ready(function () {
-        dropzone.addEventListener("dragover", dragOverEvent, true);
-        dropzone.addEventListener("dragleave", dragLeaveEvent, true);
-        dropzone.addEventListener("drop", dragDropEvent, true);
-    });
-
-</script>
+      
+@Scripts.Render("~/Scripts/cropper.js")

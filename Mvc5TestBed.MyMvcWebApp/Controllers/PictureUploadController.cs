@@ -14,11 +14,11 @@ namespace Mvc5TestBed.MyMvcWebApp.Controllers
     public class PictureUploadController : Controller
     {
         // GET: Loading
-        public ActionResult Index(UploadThingy info)
+        public ActionResult Index(ProfileImage img)
         {
             //var o = new UploadThingy();
             //o.ImgUrl = imgUrl;
-            return View("Index", info);
+            return View("Index", img);
         }
 
         private Image GetImage(HttpPostedFileBase pictureFile)
@@ -39,38 +39,46 @@ namespace Mvc5TestBed.MyMvcWebApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult Upload(IEnumerable<HttpPostedFileBase> pictureFiles)
+        public ActionResult Upload(ProfileImage img)
         {
-            string pathToSave=null;
-            foreach (var pictureFile in pictureFiles)
-            {
-                if (null==pictureFile || pictureFile.ContentLength == 0)
-                    continue;
-                pathToSave = Path.Combine(
-                   AppDomain.CurrentDomain.BaseDirectory,
-                   Path.GetFileName(pictureFile.FileName));
-
-                ViewBag.ImageBytes = CreateBytesForImg(GetImage(pictureFile));
-
-                //for now just do 1...
-                break;
-            }
-            return View("Index");
+            //save to db or whatever...
+            return View("Index", img);
         }
+
+        //[HttpPost]
+        //public ActionResult Upload(IEnumerable<HttpPostedFileBase> pictureFiles)
+        //{
+        //    string pathToSave=null;
+        //    foreach (var pictureFile in pictureFiles)
+        //    {
+        //        if (null==pictureFile || pictureFile.ContentLength == 0)
+        //            continue;
+        //        pathToSave = Path.Combine(
+        //           AppDomain.CurrentDomain.BaseDirectory,
+        //           Path.GetFileName(pictureFile.FileName));
+
+        //        ViewBag.ImageBytes = CreateBytesForImg(GetImage(pictureFile));
+
+        //        //for now just do 1...
+        //        break;
+        //    }
+        //    return View("Index");
+        //}
 
         public ActionResult JcropBasicDemo()
         {
             return View();
         }
 
-        public ActionResult DragUpload(UploadThingy info)
+        public ActionResult DragUpload(ProfileImage img)
         {
-            return View(info);
+            return View(img);
         }
 
         [HttpPost]
         public ActionResult DragUpload(IEnumerable<HttpPostedFileBase> pictureFiles)
         {
+            //TODO 
             string pathToSave = null;
             foreach (var pictureFile in pictureFiles)
             {
@@ -84,12 +92,12 @@ namespace Mvc5TestBed.MyMvcWebApp.Controllers
                 //for now just do 1...
                 break;
             }
-            var o = new UploadThingy()
+            var img = new ProfileImage()
             {
                 //as test, ignore path &hard-code this                
-                ImgUrl = Url.Content("~/images/darth.png")
+                ImageData = System.IO.File.ReadAllBytes("~/images/darth.png")
             };
-            return View("DragUpload", o);
+            return View("DragUpload", img);
         }
 
 

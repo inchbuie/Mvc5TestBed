@@ -54,23 +54,23 @@ namespace Mvc5TestBed.IntegrationTests
             appHost = AppHost.Simulate("Mvc5TestBed.MyMvcWebApp");
         }
 
-        [Test]
-        public void Root_Url_Renders_Index_View()
-        {
-            appHost.Start(browsingSession =>
-            {
-                // Request the root URL
-                RequestResult result = browsingSession.Get("Home/Index");
+        //[Test]
+        //public void Root_Url_Renders_Index_View()
+        //{
+        //    appHost.Start(browsingSession =>
+        //    {
+        //        // Request the root URL
+        //        RequestResult result = browsingSession.Get("Home/Index");
 
-                // Can make assertions about the ActionResult...
-                var viewResult = (ViewResult)result.ActionExecutedContext.Result;
-                Assert.AreEqual("Index", viewResult.ViewName);
-                Assert.AreEqual("Welcome to ASP.NET MVC!", viewResult.ViewData["Message"]);
+        //        // Can make assertions about the ActionResult...
+        //        var viewResult = (ViewResult)result.ActionExecutedContext.Result;
+        //        Assert.AreEqual("Index", viewResult.ViewName);
+        //        Assert.AreEqual("Welcome to ASP.NET MVC!", viewResult.ViewData["Message"]);
 
-                // ... or can make assertions about the rendered HTML
-                Assert.IsTrue(result.ResponseText.Contains("<!DOCTYPE html"));
-            });
-        }
+        //        // ... or can make assertions about the rendered HTML
+        //        Assert.IsTrue(result.ResponseText.Contains("<!DOCTYPE html"));
+        //    });
+        //}
 
         //[Test]
         //public void WorkWithCookiesAndSession()

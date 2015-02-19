@@ -92,6 +92,7 @@
     <Content Include="Scripts\closures\modifyingBoundValuesAfterClosure.js" />
     <Content Include="Scripts\closures\warningMakerSpec.js" />
     <Content Include="Scripts\closures\warningMaker.js" />
+    <Content Include="Scripts\cropperSpec.js" />
     <Content Include="Scripts\functionExpressions\AmusementParkSpec.js" />
     <Content Include="Scripts\functionExpressions\AmusementPark.js" />
     <Content Include="Scripts\hoisting\hoistingSpec.js" />
