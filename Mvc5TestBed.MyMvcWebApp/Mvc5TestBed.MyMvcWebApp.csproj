@@ -116,6 +116,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\WizardController.cs" />
     <Compile Include="Controllers\PictureUploadController.cs" />
     <Compile Include="Controllers\LoadingController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -215,6 +216,7 @@
     <Content Include="Views\PictureUpload\JcropBasicDemo.cshtml" />
     <Content Include="Views\PictureUpload\DragUpload.cshtml" />
     <Content Include="Views\PictureUpload\ClientSideCrop.cshtml" />
+    <Content Include="Views\Wizard\Index.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
