@@ -24,6 +24,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsDemo.SampleWebApp", "S
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecsDemo.SampleWebAppSpecs", "SpecsDemo.SampleWebAppSpecs\SpecsDemo.SampleWebAppSpecs.csproj", "{B0F8C2FA-1C9C-499E-BDCF-62A00B507A9C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mvc5TestBed.XunitTests", "Mvc5TestBed.XunitTests\Mvc5TestBed.XunitTests.csproj", "{B816B30C-2B8B-4A52-85B5-E6B61DC04338}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{B0F8C2FA-1C9C-499E-BDCF-62A00B507A9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B0F8C2FA-1C9C-499E-BDCF-62A00B507A9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B0F8C2FA-1C9C-499E-BDCF-62A00B507A9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B816B30C-2B8B-4A52-85B5-E6B61DC04338}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B816B30C-2B8B-4A52-85B5-E6B61DC04338}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B816B30C-2B8B-4A52-85B5-E6B61DC04338}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B816B30C-2B8B-4A52-85B5-E6B61DC04338}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

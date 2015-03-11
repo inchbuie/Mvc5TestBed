@@ -1,7 +1,17 @@
-﻿
+﻿@model Mvc5TestBed.MyMvcWebApp.Models.Wizard.WizardViewModel
 @{
     ViewBag.Title = "WizardExample";
 }
 
 <h2>WizardExample</h2>
+
+@using (Html.BeginForm("Begin", "Wizard"))
+{
+    @Html.EditorForModel();
+    foreach (var step in Model.Steps)
+    {        
+        @Html.TextBox("StepNumber" + step.StepNumber.ToString(), step.StepNumber);
+    }
+    <input type="submit" value="Begin Wizard" class="btn btn-success"/>
+}
 

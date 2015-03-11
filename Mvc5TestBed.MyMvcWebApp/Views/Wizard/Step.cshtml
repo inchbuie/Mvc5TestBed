@@ -1,0 +1,26 @@
+﻿@model Mvc5TestBed.MyMvcWebApp.Models.Wizard.WizardViewModel
+@{
+    ViewBag.Title = "Step" + Model.CurrentStepNumber;
+}
+
+<h2>Step@(Model.CurrentStepNumber)</h2>
+
+@using (Html.BeginForm("Next", "Wizard"))
+{
+    @Html.DisplayForModel();
+    @Html.TextBox("StepNumber" + Model.CurrentStep.StepNumber.ToString(), Model.CurrentStep.StepNumber);
+    @Html.CheckBox("IsCurrent", Model.CurrentStep.IsCurrent);
+
+    <div class="@(!Model.IsOnFirstStep && !Model.IsOnLastStep ? "btn-group" : "")">
+        @if (!Model.IsOnFirstStep)
+        {
+            @Html.ActionLink("Back", "Back", null, new { @class = "btn btnDanger" })
+        }
+        @if (!Model.IsOnLastStep)
+        {
+            <input type="submit" value="Next" class="btn btn-success" />
+        }
+    </div>
+    @*@Html.HiddenFor(m=>m.CurrentStep)
+        @Html.HiddenFor(m => m.Steps)*@
+}
