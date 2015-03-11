@@ -1,0 +1,42 @@
+﻿@model ParentChild.Model.SalesOrder
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Details</title>
+</head>
+<body>
+    <div>
+        <h4>SalesOrder</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.CustomerName)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.CustomerName)
+            </dd>
+    
+            <dt>
+                @Html.DisplayNameFor(model => model.PONumber)
+            </dt>
+    
+            <dd>
+                @Html.DisplayFor(model => model.PONumber)
+            </dd>
+    
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>
+</body>
+</html>
