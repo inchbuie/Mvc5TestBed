@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using ParentChild.DataLayer;
 using ParentChild.Model;
+using ParentChild.Web.ViewModels;
 
 namespace ParentChild.Web.Controllers
 {
@@ -20,13 +21,12 @@ namespace ParentChild.Web.Controllers
             _salesContext = new SalesContext();
         }
 
-        // GET: SalesOrders
         public ActionResult Index()
         {
+            // return View(_salesContext.SalesOrders.Select(so=>new SalesOrderViewModel(so)).ToList());
             return View(_salesContext.SalesOrders.ToList());
         }
 
-        // GET: SalesOrders/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -38,33 +38,16 @@ namespace ParentChild.Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(salesOrder);
+            var salesOrderViewModel = new SalesOrderViewModel(salesOrder);
+
+            return View(salesOrderViewModel);
         }
 
-        // GET: SalesOrders/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: SalesOrders/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CustomerName,PONumber")] SalesOrder salesOrder)
-        {
-            if (ModelState.IsValid)
-            {
-                _salesContext.SalesOrders.Add(salesOrder);
-                _salesContext.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(salesOrder);
-        }
-
-        // GET: SalesOrders/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -76,26 +59,10 @@ namespace ParentChild.Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(salesOrder);
+            var salesOrderViewModel = new SalesOrderViewModel(salesOrder);
+            return View(salesOrderViewModel);
         }
 
-        // POST: SalesOrders/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CustomerName,PONumber")] SalesOrder salesOrder)
-        {
-            if (ModelState.IsValid)
-            {
-                _salesContext.Entry(salesOrder).State = EntityState.Modified;
-                _salesContext.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(salesOrder);
-        }
-
-        // GET: SalesOrders/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -107,18 +74,8 @@ namespace ParentChild.Web.Controllers
             {
                 return HttpNotFound();
             }
-            return View(salesOrder);
-        }
-
-        // POST: SalesOrders/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            SalesOrder salesOrder = _salesContext.SalesOrders.Find(id);
-            _salesContext.SalesOrders.Remove(salesOrder);
-            _salesContext.SaveChanges();
-            return RedirectToAction("Index");
+            var salesOrderViewModel = new SalesOrderViewModel(salesOrder);
+            return View(salesOrderViewModel);
         }
 
         protected override void Dispose(bool disposing)
