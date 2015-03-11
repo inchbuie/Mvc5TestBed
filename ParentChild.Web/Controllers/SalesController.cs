@@ -45,7 +45,23 @@ namespace ParentChild.Web.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            var viewModel = new SalesOrderViewModel();
+            return View(viewModel);
+        }
+
+        public JsonResult Save(SalesOrderViewModel salesOrderViewModel)
+        {
+            SalesOrder salesOrder = salesOrderViewModel.CreateDomainObject();
+
+            _salesContext.SalesOrders.Add(salesOrder);
+            _salesContext.SaveChanges();
+
+            salesOrderViewModel.MessageToClient = string.Format(
+                "{0}'s sales order has been added to the database",
+                salesOrderViewModel.CustomerName);
+
+            //return anonymous JSON object, not view model directly
+            return Json(new { salesOrderViewModel });
         }
 
         public ActionResult Edit(int? id)

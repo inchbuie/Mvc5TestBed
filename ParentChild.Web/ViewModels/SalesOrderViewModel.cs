@@ -16,13 +16,21 @@ namespace ParentChild.Web.ViewModels
 
         public SalesOrderViewModel()
         {
-            MessageToClient = "I originated from the viwmodel, not the model";
+            MessageToClient = "I originated from the viewmodel, not the model";
         }
         public SalesOrderViewModel(SalesOrder salesOrder) :this()
         {
             Id = salesOrder.Id;
             CustomerName = salesOrder.CustomerName;
             PONumber = salesOrder.PONumber;
+        }
+
+        public SalesOrder CreateDomainObject()
+        {
+            var salesOrder = new SalesOrder();
+            salesOrder.CustomerName = this.CustomerName;
+            salesOrder.PONumber = this.PONumber;
+            return salesOrder;
         }
     }
 }
