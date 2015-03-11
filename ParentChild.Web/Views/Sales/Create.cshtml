@@ -28,11 +28,11 @@
 <div>
     <div>
         <label>Customer Name:</label>
-        <input data-bind="value: CustomerName"></input>
+        <input data-bind="value: CustomerName, event: {change: flagAsEdited}"></input>
     </div>
     <div>
         <label>P.O. Number:</label>
-        <input data-bind="value: PONumber"></input>
+        <input data-bind="value: PONumber, event: {change: flagAsEdited}"></input>
     </div>
 </div>
 

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using ParentChild.DataLayer;
 using ParentChild.Model;
 using ParentChild.Web.ViewModels;
+using System.Data.Entity.Validation;
 
 namespace ParentChild.Web.Controllers
 {
@@ -53,13 +54,37 @@ namespace ParentChild.Web.Controllers
         {
             SalesOrder salesOrder = salesOrderViewModel.CreateDomainObject();
 
-            _salesContext.SalesOrders.Add(salesOrder);
-            _salesContext.SaveChanges();
+            _salesContext.SalesOrders.Attach(salesOrder);
+            _salesContext.ChangeTracker.Entries<IObjectWithState>().Single().State =
+                Helpers.ConvertState(salesOrder.ObjectState);
+            try
+            {
+                _salesContext.SaveChanges();
+            }
+            catch (DbEntityValidationException e)
+            {
+                var validationErrors = e.EntityValidationErrors.ToList();
+                throw;
+            }
 
-            salesOrderViewModel.MessageToClient = string.Format(
-                "{0}'s sales order has been added to the database",
-                salesOrderViewModel.CustomerName);
+            switch (salesOrderViewModel.ObjectState)
+            {
+                case ObjectState.Added:
+                    salesOrderViewModel.MessageToClient =
+                        string.Format("{0}'s sales order has been added to the database", salesOrder.CustomerName);
+                    break;
+                case ObjectState.Modified:
+                    salesOrderViewModel.MessageToClient =
+                        string.Format("{0}'s sales order has been modified", salesOrder.CustomerName);
+                    break;
+                case ObjectState.Unchanged:
+                case ObjectState.Deleted:
+                default:
+                    break;
+            }
 
+            salesOrderViewModel.ObjectState = ObjectState.Unchanged;
+            salesOrderViewModel.Id = salesOrder.Id;
             //return anonymous JSON object, not view model directly
             return Json(new { salesOrderViewModel });
         }
@@ -76,6 +101,7 @@ namespace ParentChild.Web.Controllers
                 return HttpNotFound();
             }
             var salesOrderViewModel = new SalesOrderViewModel(salesOrder);
+
             return View(salesOrderViewModel);
         }
 
@@ -90,7 +116,7 @@ namespace ParentChild.Web.Controllers
             {
                 return HttpNotFound();
             }
-            var salesOrderViewModel = new SalesOrderViewModel(salesOrder);
+            var salesOrderViewModel = new SalesOrderViewModel(salesOrder );
             return View(salesOrderViewModel);
         }
 

@@ -6,11 +6,17 @@ using System.Threading.Tasks;
 
 namespace ParentChild.Model
 {
-    public class SalesOrder
+    public class SalesOrder : IObjectWithState
     {
         public int Id { get; set; }
         public string CustomerName { get; set; }
         public string PONumber { get; set; }
 
+
+        public ObjectState ObjectState
+        {
+            get;
+            set;
+        }
     }
 }
