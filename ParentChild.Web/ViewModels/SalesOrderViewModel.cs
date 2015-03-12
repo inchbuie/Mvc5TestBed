@@ -20,26 +20,26 @@ namespace ParentChild.Web.ViewModels
             MessageToClient = "I originated from the viewmodel, not the model";
             ObjectState = ObjectState.Added;
         }
-        public SalesOrderViewModel(SalesOrder salesOrder) 
-        {
-            Id = salesOrder.Id;
-            CustomerName = salesOrder.CustomerName;
-            ObjectState = ObjectState.Unchanged;
-            PONumber = salesOrder.PONumber;
-            MessageToClient = string.Format(
-               "The original value of Customer Name is {0}", salesOrder.CustomerName);
-        }
+        //public SalesOrderViewModel(SalesOrder salesOrder) 
+        //{
+        //    Id = salesOrder.Id;
+        //    CustomerName = salesOrder.CustomerName;
+        //    ObjectState = ObjectState.Unchanged;
+        //    PONumber = salesOrder.PONumber;
+        //    MessageToClient = string.Format(
+        //       "The original value of Customer Name is {0}", salesOrder.CustomerName);
+        //}
 
-        public SalesOrder CreateDomainObject()
-        {
-            var salesOrder = new SalesOrder();
-            salesOrder.Id = this.Id;
-            salesOrder.CustomerName = this.CustomerName;
-            salesOrder.PONumber = this.PONumber;
-            salesOrder.ObjectState = this.ObjectState;
+        //public SalesOrder CreateDomainObject()
+        //{
+        //    var salesOrder = new SalesOrder();
+        //    salesOrder.Id = this.Id;
+        //    salesOrder.CustomerName = this.CustomerName;
+        //    salesOrder.PONumber = this.PONumber;
+        //    salesOrder.ObjectState = this.ObjectState;
 
-            return salesOrder;
-        }
+        //    return salesOrder;
+        //}
 
     }
 }

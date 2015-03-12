@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ParentChild.DataLayer
 {
-    public static class Helpers
+    public static class DataLayerHelpers
     {
         /// <summary>
         /// Converts between our custom client-side object state 

@@ -39,7 +39,8 @@ namespace ParentChild.Web.Controllers
             {
                 return HttpNotFound();
             }
-            var salesOrderViewModel = new SalesOrderViewModel(salesOrder);
+            var salesOrderViewModel = ViewModelHelpers.CreateSalesOrderViewModelFromSalesOrder(salesOrder);
+            salesOrderViewModel.MessageToClient = "I originated from the viewmodel, not the model";
 
             return View(salesOrderViewModel);
         }
@@ -52,11 +53,12 @@ namespace ParentChild.Web.Controllers
 
         public JsonResult Save(SalesOrderViewModel salesOrderViewModel)
         {
-            SalesOrder salesOrder = salesOrderViewModel.CreateDomainObject();
+            SalesOrder salesOrder = ViewModelHelpers.CreateSalesOrderFromSalesOrderViewModel(salesOrderViewModel);
+            salesOrder.ObjectState = salesOrderViewModel.ObjectState;
 
             _salesContext.SalesOrders.Attach(salesOrder);
             _salesContext.ChangeTracker.Entries<IObjectWithState>().Single().State =
-                Helpers.ConvertState(salesOrder.ObjectState);
+                ParentChild.DataLayer.DataLayerHelpers.ConvertState(salesOrder.ObjectState);
             try
             {
                 _salesContext.SaveChanges();
@@ -67,25 +69,15 @@ namespace ParentChild.Web.Controllers
                 throw;
             }
 
-            switch (salesOrderViewModel.ObjectState)
+            if (salesOrder.ObjectState == ObjectState.Deleted)
             {
-                case ObjectState.Added:
-                    salesOrderViewModel.MessageToClient =
-                        string.Format("{0}'s sales order has been added to the database", salesOrder.CustomerName);
-                    break;
-                case ObjectState.Modified:
-                    salesOrderViewModel.MessageToClient =
-                        string.Format("{0}'s sales order has been modified", salesOrder.CustomerName);
-                    break;
-                case ObjectState.Deleted:
-                    //when deleting, do not return a view, tell the client to go to the Index instead
-                    //(we will program the client to look for this anonymous object)
-                    return Json(new { newLocation = "/Sales/Index/" });
-                    break;
-                case ObjectState.Unchanged:
-                default:
-                    break;
+                //when deleting, do not return a view, tell the client to go to the Index instead
+                //(we will program the client to look for this anonymous object)
+                return Json(new { newLocation = "/Sales/Index/" });
             }
+
+            salesOrderViewModel.MessageToClient = ViewModelHelpers
+                .GetMessageToClient(salesOrderViewModel.ObjectState, salesOrderViewModel.CustomerName);
 
             salesOrderViewModel.ObjectState = ObjectState.Unchanged;
             salesOrderViewModel.Id = salesOrder.Id;
@@ -104,7 +96,10 @@ namespace ParentChild.Web.Controllers
             {
                 return HttpNotFound();
             }
-            var salesOrderViewModel = new SalesOrderViewModel(salesOrder);
+            var salesOrderViewModel = ViewModelHelpers.CreateSalesOrderViewModelFromSalesOrder(salesOrder);
+            salesOrderViewModel.MessageToClient = string.Format(
+               "The original value of Customer Name is {0}", salesOrder.CustomerName);
+            salesOrderViewModel.ObjectState = ObjectState.Unchanged;
 
             return View(salesOrderViewModel);
         }
@@ -120,7 +115,7 @@ namespace ParentChild.Web.Controllers
             {
                 return HttpNotFound();
             }
-            var salesOrderViewModel = new SalesOrderViewModel(salesOrder );
+            var salesOrderViewModel = ViewModelHelpers.CreateSalesOrderViewModelFromSalesOrder(salesOrder);
             salesOrderViewModel.MessageToClient = "You are about to permanently delete this sales order.";
             salesOrderViewModel.ObjectState = ObjectState.Deleted;
             return View(salesOrderViewModel);

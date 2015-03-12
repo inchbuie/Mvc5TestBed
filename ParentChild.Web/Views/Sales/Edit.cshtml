@@ -21,23 +21,4 @@
     </script>
 }
 
-
-<h4>@ViewBag.Title</h4>
-<hr />
-<p data-bind="text: MessageToClient"></p>
-<div>
-    <div>
-        <label>Customer Name:</label>
-        <input data-bind="value: CustomerName, event: {change: flagAsEdited}"></input>
-    </div>
-    <div>
-        <label>P.O. Number:</label>
-        <input data-bind="value: PONumber, event: {change: flagAsEdited}"></input>
-    </div>
-</div>
-
-<p><button data-bind="click: save">Save</button></p>
-
-<p>
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@Html.Partial("_EditSalesOrder")
