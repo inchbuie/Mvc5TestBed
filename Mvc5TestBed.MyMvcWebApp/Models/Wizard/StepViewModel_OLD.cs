@@ -6,24 +6,24 @@ using System.Web.Mvc;
 
 namespace Mvc5TestBed.MyMvcWebApp.Models.Wizard
 {
-    public class StepViewModel 
+    public class StepViewModel_OLD : IStep_OLD
     {
-        private WizardViewModel _parent;
+        private WizardViewModel_OLD _parent;
 
-        public StepViewModel()
+        public StepViewModel_OLD()
         {
             _parent = null;
             StepNumber = -1;
         }
 
-        public StepViewModel(WizardViewModel parent, int stepNumber)
+        public StepViewModel_OLD(WizardViewModel_OLD parent, int stepNumber)
         {
             _parent = parent;
             StepNumber = stepNumber;
         }
 
         [HiddenInput]
-        public WizardViewModel ParentWizard
+        public WizardViewModel_OLD ParentWizard
         {
             get { return _parent; }
         }

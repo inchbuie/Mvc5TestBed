@@ -13,7 +13,7 @@ namespace Mvc5TestBed.MyMvcWebApp.Controllers
         // GET: Loading
         public ActionResult Index()
         {
-            var viewModel = new WizardViewModel(7);
+            var viewModel = new WizardViewModel();
             return View(viewModel);
         }
 
@@ -25,24 +25,20 @@ namespace Mvc5TestBed.MyMvcWebApp.Controllers
         }
 
 
-        [HttpPost]
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
-        public ActionResult Next(WizardViewModel viewModel)
-        {
-            viewModel.Advance();
-            //var step = string.Format("Step{0}", viewModel.CurrentStepNumber);
-            //return View(step, viewModel);
-            return View("Step", viewModel);
-        }
+        //[HttpPost]
+        //[OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
+        //public ActionResult Next(WizardViewModel viewModel)
+        //{
+        //    viewModel.Advance();
+        //    //var step = string.Format("Step{0}", viewModel.CurrentStepNumber);
+        //    //return View(step, viewModel);
+        //    return View("Step", viewModel);
+        //}
 
-        [HttpGet]
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
-        public ActionResult Back(WizardViewModel viewModel)
+        public JsonResult Back(WizardViewModel wizardViewModel)
         {
-            viewModel.GoBack();
-            //var step = string.Format("Step{0}", viewModel.CurrentStepNumber);
-            //return View(step, viewModel);
-            return View("Step", viewModel);
+            wizardViewModel.GoBack();
+            return Json(new { wizardViewModel });
         }
 
         [HttpPost]
@@ -56,6 +52,12 @@ namespace Mvc5TestBed.MyMvcWebApp.Controllers
         public ActionResult Complete(WizardViewModel viewModel)
         {
             return View("Step");
+        }
+
+        public JsonResult Next(WizardViewModel wizardViewModel)
+        {
+            wizardViewModel.Advance();
+            return Json(new { wizardViewModel });
         }
     }
 }

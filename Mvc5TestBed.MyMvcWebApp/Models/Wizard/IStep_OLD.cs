@@ -6,15 +6,15 @@ using System.Web;
 namespace Mvc5TestBed.MyMvcWebApp.Models.Wizard
 {
 
-    public interface IStep
+    public interface IStep_OLD
     {
-        WizardViewModel ParentWizard { get; }
+        WizardViewModel_OLD ParentWizard { get; }
         bool IsCurrent { get; set; }
 
         int StepNumber { get; set; }
 
-        IStep Next();
-        IStep Back();
-        IStep Skip();
+        IStep_OLD Next();
+        IStep_OLD Back();
+        IStep_OLD Skip();
     }
 }
