@@ -11,11 +11,18 @@ namespace Mvc5TestBed.MyMvcWebApp.Models.Wizard
         {
             CurrentStepNumber = 1;
             StepCount = 3;
+            SaveInProgress = true;
+            AllowCancel = true;
+            AllowSkipping=true;
         }
 
         public int CurrentStepNumber {  get; set; }
 
         public int StepCount { get; set; }
+
+        public bool SaveInProgress { get; set; }
+        public bool AllowCancel { get; set; }
+        public bool AllowSkipping { get; set; }
 
         public string Step_1_Field_A { get; set; }
         public string Step_1_Field_B { get; set; }

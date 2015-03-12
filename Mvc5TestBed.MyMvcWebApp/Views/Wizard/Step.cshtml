@@ -27,6 +27,9 @@
 }
 
 <h2>Step <span data-bind="text: CurrentStepNumber"></span> of <span data-bind="text: StepCount"></span></h2>
+<button id="btnCancel" data-bind="click: cancel" class="btn btn-warning btn-sm @(Model.AllowCancel?"":" hidden")">
+    Cancel
+</button>
 
 @*<div class="form-group">
         <label for="CurrentStepNumber" class="control-label">Current Step#:</label>
@@ -91,6 +94,9 @@
 
     <button id="btnBack" data-bind="click: goBack" class="btn btn-danger @(Model.CurrentStepNumber>1?"":" hidden")">
         Back
+    </button>
+    <button id="btnSkip" data-bind="click: skip" class="btn btn-info @(Model.AllowSkipping ? "" : " hidden")">
+        Skip
     </button>
     <button id="btnNext" data-bind="click: advance" class="btn btn-success @(Model.CurrentStepNumber>=Model.StepCount?" hidden":"")">
         Next

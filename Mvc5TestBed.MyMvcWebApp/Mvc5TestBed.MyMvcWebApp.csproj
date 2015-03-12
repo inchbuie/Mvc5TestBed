@@ -130,17 +130,6 @@
     <Compile Include="Models\SampleOrderProcessing.cs" />
     <Compile Include="Models\SampleSpecsForMvcSut.cs" />
     <Compile Include="Models\ProfileImage.cs" />
-    <Compile Include="Models\Wizard\IStep_OLD.cs" />
-    <Compile Include="Models\Wizard\StepViewModel_OLD.cs" />
-    <Compile Include="Models\Wizard\StepViewModel.cs" />
-    <Compile Include="Models\Wizard\Step1ViewModel.cs" />
-    <Compile Include="Models\Wizard\Step2ViewModel.cs" />
-    <Compile Include="Models\Wizard\Step3ViewModel.cs" />
-    <Compile Include="Models\Wizard\Step4ViewModel.cs" />
-    <Compile Include="Models\Wizard\Step5ViewModel.cs" />
-    <Compile Include="Models\Wizard\Step6ViewModel.cs" />
-    <Compile Include="Models\Wizard\Step7ViewModel.cs" />
-    <Compile Include="Models\Wizard\WizardViewModel_OLD.cs" />
     <Compile Include="Models\Wizard\WizardViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />

@@ -23,41 +23,49 @@ namespace Mvc5TestBed.MyMvcWebApp.Controllers
            // return View("Step1", viewModel);
             return View("Step", viewModel);
         }
+        [HttpPost]
+        public JsonResult Next(WizardViewModel wizardViewModel)
+        {
+            if (wizardViewModel.SaveInProgress)
+            {
+                //TODO if save-in-progress, save data from wizard
+            }
+            wizardViewModel.Advance();
+            return Json(new { wizardViewModel });
+        }
 
-
-        //[HttpPost]
-        //[OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
-        //public ActionResult Next(WizardViewModel viewModel)
-        //{
-        //    viewModel.Advance();
-        //    //var step = string.Format("Step{0}", viewModel.CurrentStepNumber);
-        //    //return View(step, viewModel);
-        //    return View("Step", viewModel);
-        //}
-
+        [HttpPost]
         public JsonResult Back(WizardViewModel wizardViewModel)
         {
+            if (wizardViewModel.SaveInProgress)
+            {
+                //TODO if save-in-progress, save data from wizard
+            }
             wizardViewModel.GoBack();
             return Json(new { wizardViewModel });
         }
 
         [HttpPost]
-        [OutputCacheAttribute(VaryByParam = "*", Duration = 0, NoStore = true)]
-        public ActionResult Skip(WizardViewModel viewModel)
+        public ActionResult Skip(WizardViewModel wizardViewModel)
         {
-            return View("Step");
-        }
-
-        [HttpPost]
-        public ActionResult Complete(WizardViewModel viewModel)
-        {
-            return View("Step");
-        }
-
-        public JsonResult Next(WizardViewModel wizardViewModel)
-        {
+            if (!wizardViewModel.AllowSkipping) throw new ArgumentException("not allowed to skip");
             wizardViewModel.Advance();
             return Json(new { wizardViewModel });
         }
+
+        [HttpPost]
+        public JsonResult Cancel(WizardViewModel wizardViewModel)
+        {
+            if (!wizardViewModel.AllowCancel) throw new ArgumentException("not allowed to cancel");
+            return Json(new { newLocation = Url.Action("Index", "Home") });
+        }
+
+        [HttpPost]
+        public JsonResult Complete(WizardViewModel wizardViewModel)
+        {
+            //TODO save data from wizard
+            return Json(new { newLocation = Url.Action("Index", "Home") });
+        }
+
     }
 }

@@ -11,70 +11,70 @@ namespace Mvc5TestBed.XunitTests.Models.Wizard
 {
     public class _test_WizardViewModel_OLD
     {
-        [Fact]
-        public void ShouldDefaultToHavingOneStep()
-        {
-            var wiz = new WizardViewModel_OLD();
-            wiz.StepCount.Should().Be(1);
-        }
+        //[Fact]
+        //public void ShouldDefaultToHavingOneStep()
+        //{
+        //    var wiz = new WizardViewModel_OLD();
+        //    wiz.StepCount.Should().Be(1);
+        //}
 
-        [Fact]
-        public void ShouldInitializeOnFirstStep()
-        {
-            var wiz = new WizardViewModel_OLD();
-            wiz.CurrentStep.Should().NotBeNull();
-            wiz.CurrentStepNumber.Should().Be(1);
-        }
+        //[Fact]
+        //public void ShouldInitializeOnFirstStep()
+        //{
+        //    var wiz = new WizardViewModel_OLD();
+        //    wiz.CurrentStep.Should().NotBeNull();
+        //    wiz.CurrentStepNumber.Should().Be(1);
+        //}
 
         
-        [Fact]
-        public void GivenSingleStepWizard_ItShouldStartOnTheFirstAndLastStep()
-        {
-            var wiz = new WizardViewModel_OLD();
-            wiz.IsOnFirstStep.Should().BeTrue();
-            wiz.IsOnLastStep.Should().BeTrue();
-        }
+        //[Fact]
+        //public void GivenSingleStepWizard_ItShouldStartOnTheFirstAndLastStep()
+        //{
+        //    var wiz = new WizardViewModel_OLD();
+        //    wiz.IsOnFirstStep.Should().BeTrue();
+        //    wiz.IsOnLastStep.Should().BeTrue();
+        //}
 
-        [Fact]
-        public void CanInitializeWithNumberOfSteps()
-        {
-            var wiz = new WizardViewModel_OLD(3);
-            wiz.StepCount.Should().Be(3);
-            wiz.Steps.Count.Should().Be(3);
-        }
-        [Fact]
-        public void GivenThreeStepWizard_ItShouldStartOnTheFirstButNotLastStep()
-        {
-            var wiz = new WizardViewModel_OLD(3);
-            wiz.IsOnFirstStep.Should().BeTrue();
-            wiz.IsOnLastStep.Should().BeFalse();
-        }
+        //[Fact]
+        //public void CanInitializeWithNumberOfSteps()
+        //{
+        //    var wiz = new WizardViewModel_OLD(3);
+        //    wiz.StepCount.Should().Be(3);
+        //    wiz.Steps.Count.Should().Be(3);
+        //}
+        //[Fact]
+        //public void GivenThreeStepWizard_ItShouldStartOnTheFirstButNotLastStep()
+        //{
+        //    var wiz = new WizardViewModel_OLD(3);
+        //    wiz.IsOnFirstStep.Should().BeTrue();
+        //    wiz.IsOnLastStep.Should().BeFalse();
+        //}
 
-        [Fact]
-        public void GivenThreeStepWizard_CanAdvanceToSecondStep()
-        {
-            var wiz = new WizardViewModel_OLD(3);
-            wiz.Advance();
-            wiz.CurrentStep.Should().NotBeNull();
-            wiz.CurrentStepNumber.Should().Be(2);
-        }
+        //[Fact]
+        //public void GivenThreeStepWizard_CanAdvanceToSecondStep()
+        //{
+        //    var wiz = new WizardViewModel_OLD(3);
+        //    wiz.Advance();
+        //    wiz.CurrentStep.Should().NotBeNull();
+        //    wiz.CurrentStepNumber.Should().Be(2);
+        //}
 
-        [Fact]
-        public void GivenThreeStepWizard_AfterAdvanceToSecondStep_ShouldNotBeFirstNorLast()
-        {
-            var wiz = new WizardViewModel_OLD(3);
-            wiz.Advance();
-            wiz.IsOnFirstStep.Should().BeFalse();
-            wiz.IsOnLastStep.Should().BeFalse();
-        }
+        //[Fact]
+        //public void GivenThreeStepWizard_AfterAdvanceToSecondStep_ShouldNotBeFirstNorLast()
+        //{
+        //    var wiz = new WizardViewModel_OLD(3);
+        //    wiz.Advance();
+        //    wiz.IsOnFirstStep.Should().BeFalse();
+        //    wiz.IsOnLastStep.Should().BeFalse();
+        //}
 
-        [Fact]
-        public void GivenThreeStepWizard_StepNumbersShouldBeConsecutive()
-        {
-            var wiz = new WizardViewModel_OLD(3);
-            wiz.Steps.First(s => s.StepNumber == 1).Should().NotBeNull();
-            wiz.Steps.First(s => s.StepNumber == 2).Should().NotBeNull();
-            wiz.Steps.First(s => s.StepNumber == 3).Should().NotBeNull();
-        }
+        //[Fact]
+        //public void GivenThreeStepWizard_StepNumbersShouldBeConsecutive()
+        //{
+        //    var wiz = new WizardViewModel_OLD(3);
+        //    wiz.Steps.First(s => s.StepNumber == 1).Should().NotBeNull();
+        //    wiz.Steps.First(s => s.StepNumber == 2).Should().NotBeNull();
+        //    wiz.Steps.First(s => s.StepNumber == 3).Should().NotBeNull();
+        //}
     }
 }

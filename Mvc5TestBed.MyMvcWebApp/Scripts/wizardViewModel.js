@@ -14,27 +14,42 @@
     }
 
     self.goBack = function () {
+        self.ajaxPost("/Wizard/Back/");
+    }
 
+    self.cancel = function () {
+        if (self.AllowCancel && self.AllowCancel() === true) {
+            self.ajaxPost("/Wizard/Cancel/");
+        } else {
+            if (console) console.log("not allowed to cancel");
+        }
+    }
+
+    self.save = function () {
+        self.ajaxPost("/Wizard/Save/");
+    }
+
+    self.skip = function () {
+        if (self.AllowSkipping && self.AllowSkipping() === true) {
+            self.ajaxPost("/Wizard/Skip/");
+        } else {
+            if (console) console.log("no skipping");
+        }
+    }
+
+    self.complete = function () {
+        self.ajaxPost ("/Wizard/Complete/");
+    }
+
+    self.ajaxPost = function (whereToGo) {
         $.ajax({
-            url: "/Wizard/Back/",
+            url: whereToGo,
             type: "POST",
             data: ko.toJSON(self),
             contentType: "application/json",
             success: self.handleAjaxSuccess,
             error: self.handleAjaxError
         });
-    }
-
-    self.cancel = function () {
-        if (console) console.log("TODO: cancel");
-    }
-
-    self.save = function () {
-        if (console) console.log("TODO: save");
-    }
-
-    self.complete = function () {
-        if (console) console.log("TODO: complete");
     }
 
     self.checkVisibility = function (wizardObj) {
@@ -60,10 +75,16 @@
             if (wizardObj.CurrentStepNumber >= wizardObj.StepCount) {
                 //hide Next button
                 $("#btnNext").hide();
+                if (wizardObj.AllowSkipping && wizardObj.AllowSkipping === true) {
+                    $("#btnSkip").hide();
+                }
                 $("#btnComplete").show();
             } else {
                 $("#btnNext").show();
-                $("#btnComplete").hide();                
+                $("#btnComplete").hide();
+                if (wizardObj.AllowSkipping && wizardObj.AllowSkipping === true) {
+                    $("#btnSkip").show();
+                }
             }
         }
         return true;
