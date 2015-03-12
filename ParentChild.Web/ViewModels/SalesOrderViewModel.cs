@@ -40,15 +40,6 @@ namespace ParentChild.Web.ViewModels
 
             return salesOrder;
         }
-        //public void FromExistingDomainObject(SalesOrder salesOrderDomainObj)
-        //{
-        //    this.Id=salesOrderDomainObj.Id;
-        //    this.CustomerName=salesOrderDomainObj.CustomerName;
-        //    this.PONumber=salesOrderDomainObj.PONumber;
-        //    this.MessageToClient = string.Format(
-        //        "The original value of Customer Name is {0}", salesOrderDomainObj.CustomerName
-        //    );
-        //}
 
     }
 }

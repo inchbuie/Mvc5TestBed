@@ -77,8 +77,12 @@ namespace ParentChild.Web.Controllers
                     salesOrderViewModel.MessageToClient =
                         string.Format("{0}'s sales order has been modified", salesOrder.CustomerName);
                     break;
-                case ObjectState.Unchanged:
                 case ObjectState.Deleted:
+                    //when deleting, do not return a view, tell the client to go to the Index instead
+                    //(we will program the client to look for this anonymous object)
+                    return Json(new { newLocation = "/Sales/Index/" });
+                    break;
+                case ObjectState.Unchanged:
                 default:
                     break;
             }
@@ -117,6 +121,8 @@ namespace ParentChild.Web.Controllers
                 return HttpNotFound();
             }
             var salesOrderViewModel = new SalesOrderViewModel(salesOrder );
+            salesOrderViewModel.MessageToClient = "You are about to permanently delete this sales order.";
+            salesOrderViewModel.ObjectState = ObjectState.Deleted;
             return View(salesOrderViewModel);
         }
 

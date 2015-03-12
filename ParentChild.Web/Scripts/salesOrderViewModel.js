@@ -24,6 +24,11 @@ SalesOrderViewModel = function (data) {
                 if (data.salesOrderViewModel) {
                     ko.mapping.fromJS(data.salesOrderViewModel, {}, self);
                 }
+
+                if (data.newLocation != null) {
+                    //redirect to new location
+                    window.location = data.newLocation;
+                }
             },
             error: function(xhr, status, error){
                 var err=eval("("+xhr.responseText + ")");
