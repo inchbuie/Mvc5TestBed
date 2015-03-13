@@ -149,6 +149,15 @@ $("form").validate({
         ProductCode: {
             alphaonly: "Product codes consist of letters A-z only. "
         }
+    },
+    tooltip_options: {
+        //customizing appearance of jquery-validate-bootstrap-tooltip
+        CustomerName: {
+            placement: "right"
+        },
+        PONumber: {
+            placement: "right"
+        }
     }
 
 }).checkForm = function() {

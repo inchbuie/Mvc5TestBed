@@ -22,3 +22,16 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/*customizing jquery-validate-bootstrap-tooltip styling */
+.tooltip-inner {
+    background-color: #d9534f;
+}
+
+.top.tooltip .tooltip-arrow {
+    border-top-color: #d9534f;
+}
+
+.right.tooltip  .tooltip-arrow{
+    border-right-color: #d9534f;
+}
