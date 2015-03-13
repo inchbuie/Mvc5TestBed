@@ -13,6 +13,7 @@ namespace ParentChild.Web.ViewModels
             MessageToClient = "I originated from the viewmodel, not the model";
             ObjectState = ObjectState.Added;
             Items = new List<SalesOrderItemViewModel>();
+            ItemsToDelete = new List<int>();
         }
 
         public int Id { get; set; }
@@ -23,6 +24,8 @@ namespace ParentChild.Web.ViewModels
         public ObjectState ObjectState { get; set; }
 
         public List<SalesOrderItemViewModel> Items { get; set; }
+
+        public List<int> ItemsToDelete { get; set; }
 
     }
 }

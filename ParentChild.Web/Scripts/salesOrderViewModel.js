@@ -97,5 +97,14 @@ SalesOrderViewModel = function (data) {
             total += parseFloat(salesOrderItem.ExtendedPrice());
         })
         return total.toFixed(2);
-    })
+    }),
+
+    self.deleteSalesOrderItem = function (item) {
+        self.Items.remove(this);
+
+        //add removed item to list of deleted
+        if (item.Id() > 0 && self.ItemsToDelete.indexOf(item.Id()) == -1) {
+            self.ItemsToDelete.push(item.Id());
+        }
+    }
 }
