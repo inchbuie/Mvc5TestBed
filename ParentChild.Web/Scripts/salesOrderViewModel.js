@@ -25,6 +25,19 @@ var salesOrderItemMapping = {
 SalesOrderItemViewModel = function (data) {
     var self = this;
     ko.mapping.fromJS(data, salesOrderItemMapping, self);
+
+
+    self.flagSalesOrderItemAsEdited = function () {
+        if (self.ObjectState() != ObjectState.Added) {
+            self.ObjectState(ObjectState.Modified);
+            //console.log("modified!");
+        }
+        return true;
+    },
+    self.ExtendedPrice = ko.computed(function () {
+        return (self.Quantity() * self.UnitPrice()).toFixed(2);
+    })
+
 }
 
 SalesOrderViewModel = function (data) {
@@ -56,7 +69,7 @@ SalesOrderViewModel = function (data) {
                 console.log(err.Message);
             }
         });
-    }
+    },
 
     self.flagAsEdited = function () {
         if (self.ObjectState() != ObjectState.Added) {
@@ -64,7 +77,7 @@ SalesOrderViewModel = function (data) {
             //console.log("modified!");
         }
         return true;
-    }
+    },
 
     self.addSalesOrderItem = function () {
         var item = new SalesOrderItemViewModel({
@@ -76,5 +89,13 @@ SalesOrderViewModel = function (data) {
             ObjectState: ObjectState.Added
         });
         self.Items.push(item);
-    }
+    },
+
+    self.Total = ko.computed(function () {
+        var total = 0;
+        ko.utils.arrayForEach(self.Items(), function(salesOrderItem){
+            total += parseFloat(salesOrderItem.ExtendedPrice());
+        })
+        return total.toFixed(2);
+    })
 }
