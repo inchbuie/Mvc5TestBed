@@ -3,14 +3,7 @@
     ko.mapping.fromJS(data, {}, self);
 
     self.advance = function () {
-        $.ajax({
-            url: "/Wizard/Next/",
-            type: "POST",
-            data: ko.toJSON(self),
-            contentType: "application/json",
-            success: self.handleAjaxSuccess,
-            error: self.handleAjaxError
-        });
+        self.ajaxPost("/Wizard/Next/");
     }
 
     self.goBack = function () {
