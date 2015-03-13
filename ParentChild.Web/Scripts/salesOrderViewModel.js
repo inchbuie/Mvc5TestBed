@@ -126,7 +126,8 @@ $("form").validate({
         },
         ProductCode: {
             required: true,
-            maxlength: 15
+            maxlength: 15,
+            alphaonly: true
         },
         Quantity: {
             required: true,
@@ -137,6 +138,16 @@ $("form").validate({
             required: true,
             number: true,
             range: [0, 1000000]
+        }
+    },
+    messages: {
+        //custom validation message
+        CustomerName: {
+            required: "You cannot create a sales order unless you specify the customer's name.",
+            maxlength: "Customer names must be 30 characters or shorter."
+        },
+        ProductCode: {
+            alphaonly: "Product codes consist of letters A-z only. "
         }
     }
 
@@ -161,3 +172,10 @@ $("form").validate({
     }
     return this.valid();
 };
+
+//custom validation method
+$.validator.addMethod("alphaonly",
+    function (value) {
+        return /^[A-Za-z]+$/.test(value);
+    }
+);
