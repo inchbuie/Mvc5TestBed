@@ -1,8 +1,9 @@
 ﻿
+<br />
 <h4>@ViewBag.Title</h4>
 <hr />
 <p data-bind="text: MessageToClient"></p>
-<div>
+<form>
     <div class="form-group">
         <label for="CustomerName" class="control-label">Customer Name:</label>
         <input name="CustomerName" id="CustomerName" data-bind="value: CustomerName, event: {change: flagAsEdited}" class="form-control" />
@@ -11,47 +12,49 @@
         <label for="PONumber" class="control-label">P.O. Number:</label>
         <input name="PONumber" id="PONumber" data-bind="value: PONumber, event: {change: flagAsEdited}" class="form-control" />
     </div>
-</div>
 
-<table class="table table-striped">
-    <tr>
-        <th>Product Code</th>
-        <th class="text-right">Quantity</th>
-        <th class="text-right">Unit Price</th>
-        <th class="text-right">Extended</th>
-        <th><button data-bind="click: addSalesOrderItem" class="btn btn-info btn-xs">Add</button></th>
-    </tr>
-    <tbody data-bind="foreach: Items">
+    <table class="table table-striped">
         <tr>
-            <td class="form-group">
-                <input data-bind="value: ProductCode, event:{change: flagSalesOrderItemAsEdited}, hasFocus: true"
-                       class="form-control input-sm" />
-            </td>
-            <td class="form-group">
-                <input data-bind="value: Quantity, event:{change: flagSalesOrderItemAsEdited}" class="form-control input-sm text-right" />
-            </td>
-            <td class="form-group">
-                <input data-bind="value: UnitPrice, event:{change: flagSalesOrderItemAsEdited}" class="form-control input-sm text-right" />
-            </td>
-            <td class="form-group">
-                <span data-bind="text: ExtendedPrice" class="form-control text-right"></span>
-            </td>
-            <td class="form-group"><button data-bind="click: $parent.deleteSalesOrderItem" class="btn btn-danger btn-xs">Delete</button></td>
+            <th>Product Code</th>
+            <th class="text-right">Quantity</th>
+            <th class="text-right">Unit Price</th>
+            <th class="text-right">Extended</th>
+            <th><button data-bind="click: addSalesOrderItem" class="btn btn-info btn-xs">Add</button></th>
         </tr>
-    </tbody>
-    <tr>
-        <td>&nbsp;</td>
-        <td>&nbsp;</td>
-        <td class="form-group"><span class="form-control text-right">Total</span></td>
-        <td class="form-group"><span data-bind="text: Total" class="form-control text-right"></span></td>
-        <td>&nbsp;</td>
-    </tr>
-</table>
+        <tbody data-bind="foreach: Items">
+            <tr>
+                <td class="form-group">
+                    <input name="ProductCode" 
+                           data-bind="value: ProductCode, event:{change: flagSalesOrderItemAsEdited}, hasFocus: true, attr: {'id':'ProductCode_'+$index()}"
+                           class="form-control input-sm" />
+                </td>
+                <td class="form-group">
+                    <input name="Quantity" data-bind="value: Quantity, event:{change: flagSalesOrderItemAsEdited}, attr: {'id':'Quantity'+$index()}"
+                           class="form-control input-sm text-right" />
+                </td>
+                <td class="form-group">
+                    <input name="UnitPrice" data-bind="value: UnitPrice, event:{change: flagSalesOrderItemAsEdited}, attr: {'id':'UnitPrice'+$index()}"
+                           class="form-control input-sm text-right" />
+                </td>
+                <td class="form-group">
+                    <span data-bind="text: ExtendedPrice" class="form-control text-right"></span>
+                </td>
+                <td class="form-group"><button data-bind="click: $parent.deleteSalesOrderItem" class="btn btn-danger btn-xs">Delete</button></td>
+            </tr>
+        </tbody>
+        <tr>
+            <td>&nbsp;</td>
+            <td>&nbsp;</td>
+            <td class="form-group"><span class="form-control text-right">Total</span></td>
+            <td class="form-group"><span data-bind="text: Total" class="form-control text-right"></span></td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
 
 
-<p><button data-bind="click: save" class="btn btn-primary">Save</button></p>
+    <p><button type="submit" class="btn btn-primary">Save</button></p>
 
-<p>
-    <a href="@Url.Action("Index")" class="btn btn-default btn-sm">&laquo;Back to List</a>
-</p>
-
+    <p>
+        <a href="@Url.Action("Index")" class="btn btn-default btn-sm">&laquo;Back to List</a>
+    </p>
+</form>

@@ -108,3 +108,56 @@ SalesOrderViewModel = function (data) {
         }
     }
 }
+
+//jQuery validation
+//intercept submit (validation successful)
+$("form").validate({
+    submitHandler: function () {
+        //handle submit by calling save() on current instance of js view model
+        salesOrderViewModel.save();
+    },
+    rules:{
+        CustomerName: {
+            required: true,
+            maxlength: 30
+        },
+        PONumber: {
+            maxlength: 10
+        },
+        ProductCode: {
+            required: true,
+            maxlength: 15
+        },
+        Quantity: {
+            required: true,
+            digits: true,
+            range: [1, 1000000]
+        },
+        UnitPrice: {
+            required: true,
+            number: true,
+            range: [0, 1000000]
+        }
+    }
+
+}).checkForm = function() {
+    //override jQuery.validate checkForm() method!
+    this.prepareForm();
+    for (var i = 0, elements = (this.currentElements = this.elements()) ; elements[i]; i++) {
+
+        //check name of current element (elements[i].name) to see how many elements have the same name
+        //  for a child item that is a list, each item's element will have the same name
+        //  unmodified jQuery.validate presumes a flat structure where each element's name is unique
+        if (this.findByName(elements[i].name).length != undefined && this.findByName(elements[i].name).length > 1) {
+            //iterate to find all the sub-elements with the same name
+            for (var count = 0; count < this.findByName(elements[i].name).length; count++) {
+                //check each one of these
+                this.check(this.findByName(elements[i].name)[count]);
+            }
+        } else {
+            this.check(elements[i]);
+        }
+
+    }
+    return this.valid();
+};
