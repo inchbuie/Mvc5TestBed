@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="IObjectWithState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SalesOrderItem.cs" />
     <Compile Include="SalesOrder.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

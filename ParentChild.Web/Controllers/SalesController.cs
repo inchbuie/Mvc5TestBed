@@ -54,11 +54,9 @@ namespace ParentChild.Web.Controllers
         public JsonResult Save(SalesOrderViewModel salesOrderViewModel)
         {
             SalesOrder salesOrder = ViewModelHelpers.CreateSalesOrderFromSalesOrderViewModel(salesOrderViewModel);
-            salesOrder.ObjectState = salesOrderViewModel.ObjectState;
 
             _salesContext.SalesOrders.Attach(salesOrder);
-            _salesContext.ChangeTracker.Entries<IObjectWithState>().Single().State =
-                ParentChild.DataLayer.DataLayerHelpers.ConvertState(salesOrder.ObjectState);
+            _salesContext.ApplyStateChanges();
             try
             {
                 _salesContext.SaveChanges();
@@ -76,11 +74,11 @@ namespace ParentChild.Web.Controllers
                 return Json(new { newLocation = "/Sales/Index/" });
             }
 
-            salesOrderViewModel.MessageToClient = ViewModelHelpers
-                .GetMessageToClient(salesOrderViewModel.ObjectState, salesOrderViewModel.CustomerName);
+            string msgToClient = ViewModelHelpers.GetMessageToClient(
+                salesOrderViewModel.ObjectState, salesOrderViewModel.CustomerName);
+            salesOrderViewModel = ViewModelHelpers.CreateSalesOrderViewModelFromSalesOrder(salesOrder);
+            salesOrderViewModel.MessageToClient = msgToClient;
 
-            salesOrderViewModel.ObjectState = ObjectState.Unchanged;
-            salesOrderViewModel.Id = salesOrder.Id;
             //return anonymous JSON object, not view model directly
             return Json(new { salesOrderViewModel });
         }
@@ -99,7 +97,6 @@ namespace ParentChild.Web.Controllers
             var salesOrderViewModel = ViewModelHelpers.CreateSalesOrderViewModelFromSalesOrder(salesOrder);
             salesOrderViewModel.MessageToClient = string.Format(
                "The original value of Customer Name is {0}", salesOrder.CustomerName);
-            salesOrderViewModel.ObjectState = ObjectState.Unchanged;
 
             return View(salesOrderViewModel);
         }
@@ -117,7 +114,6 @@ namespace ParentChild.Web.Controllers
             }
             var salesOrderViewModel = ViewModelHelpers.CreateSalesOrderViewModelFromSalesOrder(salesOrder);
             salesOrderViewModel.MessageToClient = "You are about to permanently delete this sales order.";
-            salesOrderViewModel.ObjectState = ObjectState.Deleted;
             return View(salesOrderViewModel);
         }
 

@@ -10,18 +10,58 @@ namespace ParentChild.Web.ViewModels
     {
         public static SalesOrderViewModel CreateSalesOrderViewModelFromSalesOrder(SalesOrder salesOrder)
         {
-            var viewModel = new SalesOrderViewModel();
-            viewModel.Id = salesOrder.Id;
-            viewModel.CustomerName = salesOrder.CustomerName;
-            viewModel.PONumber = salesOrder.PONumber;
-            return viewModel;
+            var salesOrderViewModel = new SalesOrderViewModel();
+            salesOrderViewModel.Id = salesOrder.Id;
+            salesOrderViewModel.CustomerName = salesOrder.CustomerName;
+            salesOrderViewModel.PONumber = salesOrder.PONumber;
+            salesOrderViewModel.ObjectState = ObjectState.Unchanged;
+
+            foreach (var item in salesOrder.Items)
+            {
+                var itemViewModel = new SalesOrderItemViewModel();
+                itemViewModel.Id = item.Id;
+                itemViewModel.ProductCode = item.ProductCode;
+                itemViewModel.Quantity = item.Quantity;
+                itemViewModel.UnitPrice = item.UnitPrice;
+                itemViewModel.ObjectState = ObjectState.Unchanged;
+                itemViewModel.SalesOrderId = item.SalesOrderId;
+                salesOrderViewModel.Items.Add(itemViewModel);
+            }
+            return salesOrderViewModel;
         }
-        public static SalesOrder CreateSalesOrderFromSalesOrderViewModel(SalesOrderViewModel viewModel)
+
+        public static SalesOrder CreateSalesOrderFromSalesOrderViewModel(SalesOrderViewModel orderViewModel)
         {
             var salesOrder = new SalesOrder();
-            salesOrder.Id = viewModel.Id;
-            salesOrder.CustomerName = viewModel.CustomerName;
-            salesOrder.PONumber = viewModel.PONumber;
+            salesOrder.Id = orderViewModel.Id;
+            salesOrder.CustomerName = orderViewModel.CustomerName;
+            salesOrder.PONumber = orderViewModel.PONumber;
+            salesOrder.ObjectState = orderViewModel.ObjectState;
+
+            //assign negative temporary PK so EF can distinguish entities (DB will disregard negatives)
+            int tempItemId = -1;
+
+            foreach (var itemViewModel in orderViewModel.Items)
+            {
+                var item = new SalesOrderItem();
+                item.ProductCode = itemViewModel.ProductCode;
+                item.Quantity = itemViewModel.Quantity;
+                item.UnitPrice = itemViewModel.UnitPrice;
+                item.ObjectState = itemViewModel.ObjectState;
+
+                if (itemViewModel.ObjectState != ObjectState.Added)
+                {
+                    item.Id = itemViewModel.Id;
+                }
+                else
+                {
+                    item.Id = tempItemId;
+                    tempItemId--;
+                }
+                item.SalesOrderId = itemViewModel.SalesOrderId;
+                salesOrder.Items.Add(item);
+
+            }
 
             return salesOrder;
         }

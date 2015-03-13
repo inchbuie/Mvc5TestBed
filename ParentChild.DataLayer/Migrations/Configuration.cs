@@ -19,7 +19,17 @@ namespace ParentChild.DataLayer.Migrations
             //  This method will be called after migrating to the latest version.
             context.SalesOrders.AddOrUpdate(
                 so => so.CustomerName,
-                new SalesOrder { CustomerName = "Kim", PONumber = "9876" },
+                new SalesOrder
+                {
+                    CustomerName = "Kim",
+                    PONumber = "9876",
+                    Items =
+                    {
+                        new SalesOrderItem{ProductCode="ABC123", Quantity=10, UnitPrice=1.44m}
+                        ,new SalesOrderItem{ProductCode="xyz987", Quantity=7, UnitPrice=45.57m}
+                        ,new SalesOrderItem{ProductCode="vinyl discs", Quantity=6, UnitPrice=14.99m}
+                    }
+                },
                 new SalesOrder { CustomerName = "Alexandra" },
                 new SalesOrder { CustomerName = "Andrea", PONumber = "Red #9" }
                 );

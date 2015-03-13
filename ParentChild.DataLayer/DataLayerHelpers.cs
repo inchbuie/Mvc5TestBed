@@ -38,5 +38,19 @@ namespace ParentChild.DataLayer
             }
             return state;
         }
+
+        /// <summary>
+        /// extension method to apply state changes to child entities for objects
+        ///   for which we are manually tracking state changes
+        /// </summary>
+        /// <param name="context"></param>
+        public static void ApplyStateChanges(this DbContext context)
+        {
+            foreach (var entry in context.ChangeTracker.Entries<IObjectWithState>())
+            {
+                var state = entry.Entity;
+                entry.State = ConvertState(state.ObjectState);
+            }
+        }
     }
 }

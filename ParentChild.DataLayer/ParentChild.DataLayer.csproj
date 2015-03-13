@@ -50,6 +50,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SalesContext.cs" />
+    <Compile Include="SalesOrderItemConfiguration.cs" />
     <Compile Include="SalesOrderConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
