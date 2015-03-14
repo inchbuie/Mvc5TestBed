@@ -65,8 +65,14 @@ SalesOrderViewModel = function (data) {
                 }
             },
             error: function(xhr, status, error){
-                var err=eval("("+xhr.responseText + ")");
-                console.log(err.Message);
+
+                if (xhr.status == 400) {
+                    $("#MessageToClient").text(xhr.responseText);
+                } else {
+                    var err = eval("(" + xhr.responseText + ")");
+                    if (console && console.log) console.log(err.Message);
+                    $("#MessageToClient").text("The web server had an error (" + xhr.status + ")");
+                }
             }
         });
     },
@@ -137,7 +143,7 @@ $("form").validate({
         UnitPrice: {
             required: true,
             number: true,
-            range: [0, 1000000]
+            range: [0, 100000]
         }
     },
     messages: {

@@ -51,8 +51,14 @@ namespace ParentChild.Web.Controllers
             return View(viewModel);
         }
 
+        [HandleModelStateException]
         public JsonResult Save(SalesOrderViewModel salesOrderViewModel)
         {
+            if (!ModelState.IsValid)
+            {
+                throw new ModelStateException(ModelState);
+            }
+
             SalesOrder salesOrder = ViewModelHelpers.CreateSalesOrderFromSalesOrderViewModel(salesOrderViewModel);
 
             _salesContext.SalesOrders.Attach(salesOrder);
