@@ -10,6 +10,7 @@ using ParentChild.DataLayer;
 using ParentChild.Model;
 using ParentChild.Web.ViewModels;
 using System.Data.Entity.Validation;
+using System.Data.Entity.Infrastructure;
 
 namespace ParentChild.Web.Controllers
 {
@@ -90,10 +91,15 @@ namespace ParentChild.Web.Controllers
             }
 
             _salesContext.ApplyStateChanges();
+            string msgToClient = string.Empty;
 
             try
             {
                 _salesContext.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                msgToClient = "Another user has modified this sales order since you began looking at it. Your changes have not been applied and your screen has been updated with the current values.";
             }
             catch (Exception ex)
             {
@@ -107,8 +113,22 @@ namespace ParentChild.Web.Controllers
                 return Json(new { newLocation = "/Sales/Index/" });
             }
 
-            string msgToClient = ViewModelHelpers.GetMessageToClient(
-                salesOrderViewModel.ObjectState, salesOrderViewModel.CustomerName);
+            //only assign msg here if no other msg assigned yet
+            if (string.IsNullOrWhiteSpace(msgToClient))
+            {
+                msgToClient = ViewModelHelpers.GetMessageToClient(
+                   salesOrderViewModel.ObjectState, salesOrderViewModel.CustomerName);
+            }
+
+            
+            //save a copy of the id
+            salesOrderViewModel.Id = salesOrder.Id;
+            //dispose context to refresh data (someone else may have changed data)
+            _salesContext.Dispose();
+            _salesContext = new SalesContext();
+            //refresh with latest data
+            salesOrder = _salesContext.SalesOrders.Find(salesOrderViewModel.Id);
+
             salesOrderViewModel = ViewModelHelpers.CreateSalesOrderViewModelFromSalesOrder(salesOrder);
             salesOrderViewModel.MessageToClient = msgToClient;
 

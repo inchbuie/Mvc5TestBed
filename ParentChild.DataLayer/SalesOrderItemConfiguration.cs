@@ -26,6 +26,7 @@ namespace ParentChild.DataLayer
             Property(soi => soi.UnitPrice)
                 .IsRequired();
             Ignore(soi => soi.ObjectState);
+            Property(soi => soi.RowVersion).IsRowVersion();
         }
     }
 }

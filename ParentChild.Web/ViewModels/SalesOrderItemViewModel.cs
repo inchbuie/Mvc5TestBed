@@ -29,9 +29,9 @@ namespace ParentChild.Web.ViewModels
 
         public ObjectState ObjectState { get; set; }
 
-        //public SalesOrderItemViewModel()
-        //{
-        //    ObjectState = ObjectState.Added;
-        //}
+        /// <summary>
+        /// for concurrency tracking
+        /// </summary>
+        public byte[] RowVersion { get; set; }
     }
 }

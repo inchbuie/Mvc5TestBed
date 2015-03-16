@@ -26,6 +26,7 @@ namespace ParentChild.Web.ViewModels
                 itemViewModel.UnitPrice = item.UnitPrice;
                 itemViewModel.ObjectState = ObjectState.Unchanged;
                 itemViewModel.SalesOrderId = item.SalesOrderId;
+                itemViewModel.RowVersion = item.RowVersion;
                 salesOrderViewModel.Items.Add(itemViewModel);
             }
             return salesOrderViewModel;
@@ -50,6 +51,7 @@ namespace ParentChild.Web.ViewModels
                 item.Quantity = itemViewModel.Quantity;
                 item.UnitPrice = itemViewModel.UnitPrice;
                 item.ObjectState = itemViewModel.ObjectState;
+                item.RowVersion = itemViewModel.RowVersion;
 
                 if (itemViewModel.ObjectState != ObjectState.Added)
                 {
