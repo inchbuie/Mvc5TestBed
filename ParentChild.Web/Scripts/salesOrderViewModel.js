@@ -22,6 +22,16 @@ var salesOrderItemMapping = {
     }
 }
 
+// knockout needs to send RowVersion (byte[]) as base-64 
+// encoded value so that the server will recognize it
+var dataConverter = function (key, value) {
+    if (key === "RowVersion" && Array.isArray(value)) {
+        var str = String.fromCharCode.apply(null, value);
+        return btoa(str);
+    }
+    return value;
+}
+
 SalesOrderItemViewModel = function (data) {
     var self = this;
     ko.mapping.fromJS(data, salesOrderItemMapping, self);
@@ -48,7 +58,7 @@ SalesOrderViewModel = function (data) {
         $.ajax({
             url: "/Sales/Save/",
             type: "POST",
-            data: ko.toJSON(self),
+            data: ko.toJSON(self, dataConverter),
             contentType: "application/json",
             success: function (data) {
                 //if view model is returned directly

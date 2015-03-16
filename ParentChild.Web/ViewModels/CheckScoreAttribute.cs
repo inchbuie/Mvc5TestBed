@@ -25,7 +25,7 @@ namespace ParentChild.Web.ViewModels
             if (score < _minScore)
             {
                 return new ValidationResult(
-                    string.Format("The name score must be at least {0} but was {1}",
+                    string.Format("Invalid Name: the name score must be at least {0} but was {1}",
                         _minScore, score));
             }
             return ValidationResult.Success;

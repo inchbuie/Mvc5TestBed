@@ -19,7 +19,7 @@ namespace ParentChild.Web.ViewModels
 
         public int Id { get; set; }
 
-        [SimulatedExpenseive_CheckScore_Attribute(3.14)]
+        [SimulatedExpenseive_CheckScore_Attribute(1)]
         [Required(ErrorMessage="Server: You cannot create a sales order unless you supply the customer's name.")]
         [StringLength(30, ErrorMessage = "Server: Customer names must be 30 characters or shorter. ")]
         public string CustomerName { get; set; }
@@ -34,6 +34,7 @@ namespace ParentChild.Web.ViewModels
         public List<SalesOrderItemViewModel> Items { get; set; }
 
         public List<int> ItemsToDelete { get; set; }
+        public byte[] RowVersion { get; set; }
 
     }
 }

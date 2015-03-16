@@ -15,6 +15,7 @@ namespace ParentChild.Web.ViewModels
             salesOrderViewModel.CustomerName = salesOrder.CustomerName;
             salesOrderViewModel.PONumber = salesOrder.PONumber;
             salesOrderViewModel.ObjectState = ObjectState.Unchanged;
+            salesOrderViewModel.RowVersion = salesOrder.RowVersion;
 
             foreach (var item in salesOrder.Items)
             {
@@ -37,6 +38,7 @@ namespace ParentChild.Web.ViewModels
             salesOrder.CustomerName = orderViewModel.CustomerName;
             salesOrder.PONumber = orderViewModel.PONumber;
             salesOrder.ObjectState = orderViewModel.ObjectState;
+            salesOrder.RowVersion = orderViewModel.RowVersion;
 
             //assign negative temporary PK so EF can distinguish entities (DB will disregard negatives)
             int tempItemId = -1;

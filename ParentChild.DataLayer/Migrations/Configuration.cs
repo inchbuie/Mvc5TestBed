@@ -25,8 +25,8 @@ namespace ParentChild.DataLayer.Migrations
                     PONumber = "9876",
                     Items =
                     {
-                        new SalesOrderItem{ProductCode="ABC123", Quantity=10, UnitPrice=1.44m}
-                        ,new SalesOrderItem{ProductCode="xyz987", Quantity=7, UnitPrice=45.57m}
+                        new SalesOrderItem{ProductCode="ABC", Quantity=10, UnitPrice=1.44m}
+                        ,new SalesOrderItem{ProductCode="xyz", Quantity=7, UnitPrice=45.57m}
                         ,new SalesOrderItem{ProductCode="vinyl discs", Quantity=6, UnitPrice=14.99m}
                     }
                 },

@@ -18,5 +18,7 @@ namespace ParentChild.Model
         public string PONumber { get; set; }
         public ObjectState ObjectState { get; set; }
         public virtual List<SalesOrderItem> Items { get; set; }
+
+        public byte[] RowVersion { get; set; }
     }
 }
