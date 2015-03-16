@@ -90,14 +90,14 @@ namespace ParentChild.Web.Controllers
             }
 
             _salesContext.ApplyStateChanges();
+
             try
             {
                 _salesContext.SaveChanges();
             }
-            catch (DbEntityValidationException e)
+            catch (Exception ex)
             {
-                var validationErrors = e.EntityValidationErrors.ToList();
-                throw;
+                throw new ModelStateException(ex);
             }
 
             if (salesOrder.ObjectState == ObjectState.Deleted)

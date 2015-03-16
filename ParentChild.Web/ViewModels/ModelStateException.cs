@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Web;
@@ -23,13 +24,37 @@ namespace ParentChild.Web.ViewModels
             }
         }
 
-        public ModelStateException(ModelStateDictionary modelState)
+        public ModelStateException()
+        {
+            Errors = new Dictionary<string, string>();
+        }
+
+        public ModelStateException(Exception ex) : this()
+        {
+            string msg = string.Empty;
+            if (ex is DbEntityValidationException)
+            {
+                var validationErrors = ((DbEntityValidationException)ex).EntityValidationErrors.ToList();
+                foreach (var ve in validationErrors)
+                {
+                    Errors.Add(string.Empty, ve.ToString());
+                }
+            }
+            else
+            {
+                msg = (ex.InnerException != null && ex.InnerException.InnerException != null)
+                    ? ex.InnerException.InnerException.Message
+                    : ex.Message;
+                Errors.Add(string.Empty, msg);
+            }
+        }
+
+        public ModelStateException(ModelStateDictionary modelState):this()
         {
             if (modelState == null)
             {
                 throw new ArgumentNullException("modelState");
             }
-            Errors = new Dictionary<string, string>();
 
             if (!modelState.IsValid)
             {
