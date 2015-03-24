@@ -225,13 +225,9 @@
     <Content Include="Views\PictureUpload\ClientSideCrop.cshtml" />
     <Content Include="Views\Wizard\Index.cshtml" />
     <Content Include="Views\Wizard\_step_1_partial.cshtml" />
-    <Content Include="Views\Wizard\Step2.cshtml" />
-    <Content Include="Views\Wizard\Step7.cshtml" />
-    <Content Include="Views\Wizard\Step6.cshtml" />
-    <Content Include="Views\Wizard\Step5.cshtml" />
-    <Content Include="Views\Wizard\Step4.cshtml" />
-    <Content Include="Views\Wizard\Step3.cshtml" />
     <Content Include="Views\Wizard\Step.cshtml" />
+    <Content Include="Views\Wizard\_step_2_partial.cshtml" />
+    <Content Include="Views\Wizard\_step_3_partial.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

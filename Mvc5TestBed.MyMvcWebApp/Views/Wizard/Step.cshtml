@@ -31,64 +31,15 @@
     Cancel
 </button>
 
-@*<div class="form-group">
-        <label for="CurrentStepNumber" class="control-label">Current Step#:</label>
-        <input name="CurrentStepNumber" id="CurrentStepNumber" data-bind="value: CurrentStepNumber" class="form-control" />
-    </div
-    <div class="form-group">
-        <label for="StepCount" class="control-label">Total Steps:</label>
-        <input name="StepCount" id="StepCount" data-bind="value: StepCount" class="form-control" />
-    </div>>*@
-<hr />
-<div id="Step_1">
-
-    <div class="form-group">
-        <label for="Step_1_Field_A" class="control-label @(Model.CurrentStepNumber == 1 ? "":"hidden")">Step_1_Field_A:</label>
-        <input type="@(Model.CurrentStepNumber == 1 ? "text":"hidden")" name="Step_1_Field_A" id="Step_1_Field_A" data-bind="value: Step_1_Field_A" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="Step_1_Field_B" class="control-label@(Model.CurrentStepNumber == 1 ? "" : "hidden")">Step_1_Field_B:</label>
-        <input type="@(Model.CurrentStepNumber == 1 ? "text":"hidden")" name="Step_1_Field_B" id="Step_1_Field_B" data-bind="value: Step_1_Field_B" class="form-control" />
-    </div>
-</div>
-
-<div id="Step_2">
-    <div class="form-group">
-        <label for="Step_2_Field_A" class="control-label @(Model.CurrentStepNumber == 2 ? "" : "hidden")">Step_2_Field_A:</label>
-        <input type="@(Model.CurrentStepNumber == 2 ? "text":"hidden")" name="Step_2_Field_A" id="Step_2_Field_A" data-bind="value: Step_2_Field_A" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="Step_2_Field_B" class="control-label @(Model.CurrentStepNumber == 2 ? "" : "hidden")">Step_2_Field_B:</label>
-        <input type="@(Model.CurrentStepNumber == 2 ? "text":"hidden")" name="Step_2_Field_B" id="Step_2_Field_B" data-bind="value: Step_2_Field_B" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="Step_2_Field_C" class="control-label @(Model.CurrentStepNumber == 2 ? "" : "hidden")">Step_2_Field_C:</label>
-        <input type="@(Model.CurrentStepNumber == 2 ? "text":"hidden")" name="Step_2_Field_C" id="Step_2_Field_C" data-bind="value: Step_2_Field_C" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="Step_2_Field_D" class="control-label @(Model.CurrentStepNumber == 2 ? "" : "hidden")">Step_2_Field_D:</label>
-        <input type="@(Model.CurrentStepNumber == 2 ? "text":"hidden")" name="Step_2_Field_D" id="Step_2_Field_D" data-bind="value: Step_2_Field_D" class="form-control" />
-    </div>
-</div>
-
-
-<div id="Step_3">
-    <div class="form-group">
-        <label for="Step_3_Field_A" class="control-label @(Model.CurrentStepNumber == 3 ? "" : "hidden")">Step_3_Field_A:</label>
-        <input type="@(Model.CurrentStepNumber == 3 ? "text":"hidden")" name="Step_3_Field_A" id="Step_3_Field_A" data-bind="value: Step_3_Field_A" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="Step_3_Field_B" class="control-label @(Model.CurrentStepNumber == 3 ? "" : "hidden")">Step_3_Field_B:</label>
-        <input type="@(Model.CurrentStepNumber == 3 ? "text":"hidden")" name="Step_3_Field_B" id="Step_3_Field_B" data-bind="value: Step_3_Field_B" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label for="Step_3_Field_C" class="control-label @(Model.CurrentStepNumber == 3 ? "" : "hidden")">Step_3_Field_C:</label>
-        <input type="@(Model.CurrentStepNumber == 3 ? "text":"hidden")" name="Step_3_Field_C" id="Step_3_Field_C" data-bind="value: Step_3_Field_C" class="form-control" />
-    </div>
-</div>
-
 <hr />
 
+@{Html.RenderPartial("_step_1_partial", Model);}
+
+@{Html.RenderPartial("_step_2_partial", Model);}
+
+@{Html.RenderPartial("_step_3_partial", Model);}
+
+<hr />
 
 <div id="nextBackButtonGroup" class="@(Model.CurrentStepNumber>1 ? "btn-group" : "")">
 
